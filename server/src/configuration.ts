@@ -1,7 +1,7 @@
 import fs from 'fs'
 import YAML from 'yaml'
 
-export interface DatabaseConfiguration {
+export interface DatabaseConfig {
     host: string
     username: string
     password: string
@@ -10,17 +10,24 @@ export interface DatabaseConfiguration {
 }
 
 export interface Config {
-    database: DatabaseConfiguration
+    database: DatabaseConfig
 }
-
+/** Singleton class manageing server configuration */
 export class Configuration {
     static config: Config
     static location: string
 
+    /**
+     * Sets path to the yaml file
+     * @param  {string} path to the config
+     * @returns void
+     */
     public static setLocation(location: string): void {
         Configuration.location = location
     }
-
+    /**
+     * @returns Config
+     */
     public static getConfiguration(): Config {
         if (Configuration.config) {
             return Configuration.config
@@ -32,5 +39,11 @@ export class Configuration {
 
         Configuration.config = YAML.parse(fs.readFileSync(Configuration.location, 'utf8'))
         return Configuration.config
+    }
+    /**
+     * @returns DatabaseConfig
+     */
+    public static getDatabaseConfig(): DatabaseConfig {
+        return Configuration.getConfiguration().database
     }
 }
