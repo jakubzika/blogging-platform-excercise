@@ -16,6 +16,7 @@ export interface HttpServerConfig {
         key?: string
     }
     port: number
+    jtwSecret: string
 }
 
 export interface Config {
@@ -55,5 +56,9 @@ export class Configuration {
      */
     public static getDatabaseConfig(): DatabaseConfig {
         return Configuration.getConfiguration().database
+    }
+
+    public static getJwtSecret(): string {
+        return Configuration.getConfiguration().server.jtwSecret
     }
 }
