@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    BaseEntity,
+    CreateDateColumn,
+} from 'typeorm'
 
 import { Article } from './article'
 import { Comment } from './comment'
@@ -11,11 +18,14 @@ export class User extends BaseEntity {
     @Column()
     name: string
 
-    @Column()
+    @Column({ unique: true })
     email: string
 
     @Column()
     password: string
+
+    @CreateDateColumn()
+    created: string
 
     @OneToMany(() => Article, (article) => article.creator)
     articles: Article[]

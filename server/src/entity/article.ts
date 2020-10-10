@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    ManyToOne,
+    OneToMany,
+    BaseEntity,
+    CreateDateColumn,
+    UpdateDateColumn,
+} from 'typeorm'
 
 import { User } from './user'
 import { Comment } from './comment'
@@ -18,8 +27,11 @@ export class Article extends BaseEntity {
     @Column('text')
     content: string
 
-    @Column('timestamp')
-    timestamp: string
+    @CreateDateColumn()
+    created: string
+
+    @UpdateDateColumn()
+    edited: string
 
     @ManyToOne(() => User, (user) => user.articles)
     creator: User
