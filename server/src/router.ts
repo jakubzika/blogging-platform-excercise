@@ -4,8 +4,11 @@ export class Router {
     server: Server
     base: string
 
-    constructor(server: Server, base: string) {
+    constructor(server: Server) {
         this.server = server
+    }
+
+    setBase(base: string) {
         this.base = base
     }
 
