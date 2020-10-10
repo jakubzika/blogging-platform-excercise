@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BaseEntity } from 'typeorm'
 
 import { User } from './user'
 import { Comment } from './comment'
 import { Vote } from './vote'
 
 @Entity()
-export class Article {
+export class Article extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 

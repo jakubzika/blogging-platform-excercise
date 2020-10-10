@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn, ManyToOne } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    PrimaryColumn,
+    ManyToOne,
+    BaseEntity,
+} from 'typeorm'
 
 import { Article } from './article'
 
@@ -8,7 +15,7 @@ export enum VoteType {
 }
 
 @Entity()
-export class Vote {
+export class Vote extends BaseEntity {
     @PrimaryColumn()
     ip: string
 
