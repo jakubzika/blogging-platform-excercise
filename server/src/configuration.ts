@@ -9,8 +9,18 @@ export interface DatabaseConfig {
     database: string
 }
 
+export interface HttpServerConfig {
+    options: {
+        url: string
+        certificate?: string
+        key?: string
+    }
+    port: number
+}
+
 export interface Config {
     database: DatabaseConfig
+    server: HttpServerConfig
 }
 /** Singleton class manageing server configuration */
 export class Configuration {
