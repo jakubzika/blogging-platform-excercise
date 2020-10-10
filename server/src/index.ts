@@ -1,26 +1,19 @@
 import 'reflect-metadata'
-import YAML from 'yaml'
-import fs from 'fs'
-import { createConnection } from 'typeorm'
 
-import { Configuration } from './config'
+import { Configuration } from './configuration'
+import { DatabaseProvider } from './database'
 
-const configuration: Configuration = YAML.parse(fs.readFileSync('../config.yml', 'utf8'))
-const dbConfig = configuration.database
+import { controllers } from './controllers'
+import { Server } from './server'
 
-createConnection({
-    type: 'postgres',
-    host: dbConfig.host,
-    port: dbConfig.port,
-    username: dbConfig.username,
-    password: dbConfig.password,
-    database: dbConfig.database,
-    entities: [__dirname + '/entity/*.ts'],
-    synchronize: true,
-})
-    .then((connection) => {
-        console.log('started')
-    })
-    .catch((err) => {
-        console.log(err)
-    })
+async function main() {
+    console.log('start')
+    Configuration.setLocation('../config.yml')
+
+    const server: Server = new Server(Configuration.getConfiguration().server, controllers)
+    DatabaseProvider.getConnection()
+
+    server.start()
+    console.log('server running')
+}
+main()
