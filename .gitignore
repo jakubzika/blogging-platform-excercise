@@ -3,3 +3,6 @@ server/node_modules/
 .vscode/
 server/dist/
 config.yml
+dist/*
+client/yarn-error.log
+server/yarn-error.log
