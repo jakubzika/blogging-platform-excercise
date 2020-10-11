@@ -13,12 +13,12 @@ export class ArticleController implements RouteHandler {
     registerHandler(router: Router) {
         router.setBase('/article')
 
-        router.get('/', this.list.bind(this))
-        router.get('/by/:user', this.listByUser.bind(this))
-        router.get('/:article', this.get.bind(this))
-        router.post('/', this.create.bind(this), { authentication: true })
-        router.patch('/:article', this.update.bind(this), { authentication: true })
-        router.del('/:article', this.delete.bind(this), { authentication: true })
+        router.get('/', this.list)
+        router.get('/by/:user', this.listByUser)
+        router.get('/:article', this.get)
+        router.post('/', this.create, { authentication: true })
+        router.patch('/:article', this.update, { authentication: true })
+        router.del('/:article', this.delete, { authentication: true })
     }
 
     async list(req: Request, res: Response, next: Next) {
@@ -114,9 +114,9 @@ export class ArticleController implements RouteHandler {
     }
 
     async delete(req: Request, res: Response, next: Next) {
-        const deleteArticleDTO: deleteArticleDTO = req.body
+        const articleId = req.params.article
 
-        const article = await Article.findOne({ id: deleteArticleDTO.id })
+        const article = await Article.findOne(articleId)
 
         if (article === undefined) {
             next(new errors.NotFoundError('Article with given id does not exist'))
