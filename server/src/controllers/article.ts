@@ -1,9 +1,8 @@
-import { Server, RequestHandler, Request, Response, Next } from 'restify'
+import { Request, Response, Next } from 'restify'
 import errors from 'restify-errors'
 
 import { RouteHandler } from './route'
 import { Router } from '../router'
-import { DatabaseProvider } from '../database'
 
 import { User } from '../entity/user'
 import { Article } from '../entity/article'
@@ -18,15 +17,12 @@ export class ArticleController implements RouteHandler {
         router.get('/by/:user', this.listByUser.bind(this))
         router.get('/:article', this.get.bind(this))
         router.post('/', this.create.bind(this), { authentication: true })
-        router.patch('/:article', this.update.bind(this), { authentication: true }) // auth
-        router.del('/:article', this.delete.bind(this), { authentication: true }) // auth
+        router.patch('/:article', this.update.bind(this), { authentication: true })
+        router.del('/:article', this.delete.bind(this), { authentication: true })
     }
 
     async list(req: Request, res: Response, next: Next) {
         const queryParams: getArticlesDTO = req.query
-
-        // sad walkaround because Request property has not specified user type when authentication is enabled
-        const user: JwtData = req['user']
 
         let articles: Article[]
 
@@ -73,7 +69,9 @@ export class ArticleController implements RouteHandler {
     async create(req: Request, res: Response, next: Next) {
         let article = new Article()
 
+        // sad walkaround because Request property has not specified user type when authentication is enabled
         const userJwt: JwtData = req['user']
+
         const articelDTO: createArticleDTO = req.body
 
         const user: User = await User.findOne({ id: userJwt.uid })
@@ -114,6 +112,7 @@ export class ArticleController implements RouteHandler {
         res.send(article)
         next()
     }
+
     async delete(req: Request, res: Response, next: Next) {
         const deleteArticleDTO: deleteArticleDTO = req.body
 
