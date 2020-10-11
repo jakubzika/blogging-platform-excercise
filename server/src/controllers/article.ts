@@ -7,7 +7,7 @@ import { Router } from '../router'
 import { User } from '../entity/user'
 import { Article } from '../entity/article'
 import { JwtData } from './user'
-import { getArticlesDTO, createArticleDTO, editArticleDTO, deleteArticleDTO } from './dto'
+import { getArticlesDTO, createArticleDTO, editArticleDTO } from './dto'
 
 export class ArticleController implements RouteHandler {
     registerHandler(router: Router) {
@@ -92,9 +92,10 @@ export class ArticleController implements RouteHandler {
         // TODO: error handling, if article with given id does not exist
         const userId = req['user'].uid
         const editArticleDTO: editArticleDTO = req.body
+        const articleId = req.params.article
 
         const [article, user] = await Promise.all([
-            Article.findOne({ id: editArticleDTO.id }),
+            Article.findOne(articleId),
             User.findOne({ id: userId }),
         ])
         if (article === undefined) {
