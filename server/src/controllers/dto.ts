@@ -14,3 +14,7 @@ export type getArticlesDTO = {
     skip?: number
     take?: number
 }
+
+export type createCommentDTO = {
+    content: string
+}
