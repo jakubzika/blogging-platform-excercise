@@ -7,6 +7,7 @@ import {
     BaseEntity,
     CreateDateColumn,
     UpdateDateColumn,
+    RelationId,
 } from 'typeorm'
 
 import { User } from './user'
@@ -36,9 +37,12 @@ export class Article extends BaseEntity {
     @ManyToOne(() => User, (user) => user.articles)
     creator: User
 
+    @RelationId((article: Article) => article.creator)
+    creatorId: number
+
     @OneToMany(() => Comment, (comment) => comment.article)
     comments: Comment[]
 
     @OneToMany(() => Vote, (vote) => vote.article)
-    vote: Vote
+    vote: Vote[]
 }
