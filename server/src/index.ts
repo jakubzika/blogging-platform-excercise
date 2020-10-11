@@ -1,6 +1,8 @@
 import 'reflect-metadata'
 
 import { Configuration } from './configuration'
+Configuration.setLocation('../config.yml')
+
 import { DatabaseProvider } from './database'
 
 import { controllers } from './controllers'
@@ -8,7 +10,6 @@ import { Server } from './server'
 
 async function main() {
     console.log('start')
-    Configuration.setLocation('../config.yml')
 
     const server: Server = new Server(Configuration.getConfiguration().server, controllers)
     DatabaseProvider.getConnection()
