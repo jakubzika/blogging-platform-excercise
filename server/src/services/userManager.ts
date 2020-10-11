@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 
 import { User } from '../entity/user'
+import { Request, Response, Next } from 'restify'
 
 // substitute for DTO
 export interface UserCreationObject {
@@ -28,7 +29,7 @@ export enum UserAuthenticationError {
 
 // TODO : error handling
 export class UserManager {
-    static async createuser(
+    public static async createuser(
         userCreationObject: UserCreationObject
     ): Promise<User | UserCreationError> {
         // logic for duplicity
@@ -49,7 +50,9 @@ export class UserManager {
         return await User.save(user)
     }
 
-    static async authenticate(login: LoginCredentials): Promise<User | UserAuthenticationError> {
+    public static async authenticate(
+        login: LoginCredentials
+    ): Promise<User | UserAuthenticationError> {
         const user = await User.findOne({ email: login.email })
         if (user === undefined) {
             return UserAuthenticationError.NO_ACCOUNT_WITH_EMAIL
@@ -63,4 +66,6 @@ export class UserManager {
             return UserAuthenticationError.PASSWORDS_DONT_MATCH
         }
     }
+
+    public static async restifyUserMapperPlugin(req: Request, res: Response, next: Next) {}
 }
