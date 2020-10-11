@@ -5,6 +5,7 @@ import {
     PrimaryColumn,
     ManyToOne,
     BaseEntity,
+    CreateDateColumn,
 } from 'typeorm'
 
 import { Article } from './article'
@@ -16,7 +17,7 @@ export class Comment extends BaseEntity {
     id: number
 
     // TODO: figure out how to make this column also the PrimaryKey
-    @ManyToOne(() => Article, (article) => article.comments)
+    @ManyToOne(() => Article, (article) => article.comments, { onDelete: 'CASCADE' })
     article: Article
 
     @ManyToOne(() => User, (user) => user.comments)
@@ -25,6 +26,6 @@ export class Comment extends BaseEntity {
     @Column('text')
     content: string
 
-    @Column('timestamp')
-    timestamp: string
+    @CreateDateColumn()
+    created: string
 }
