@@ -36,21 +36,6 @@ export class Router {
         this.addRoute('del', path, handlers, options)
     }
 
-    // post(path: string, ...handlers: RequestHandler[]) {
-    //     this.addRoute('post', path, handlers)
-    // }
-    // put(path: string, ...handlers: RequestHandler[]) {
-    //     this.addRoute('put', path, handlers)
-    // }
-    // patch(path: string, ...handlers: RequestHandler[]) {
-    //     this.addRoute('patch', path, handlers)
-    // }
-    // del(path: string, ...handlers: RequestHandler[]) {
-    //     this.addRoute('del', path, handlers)
-    // }
-
-    authPlugin
-
     private addRoute(
         method: 'get' | 'post' | 'put' | 'patch' | 'del',
         path: string,
