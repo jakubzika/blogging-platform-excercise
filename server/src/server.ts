@@ -1,5 +1,6 @@
 import * as restify from 'restify'
 import { Router } from './router'
+import corsMiddleware from 'restify-cors-middleware'
 
 import { HttpServerConfig } from './configuration'
 import { RouteHandler } from './controllers/route'
@@ -15,6 +16,7 @@ export class Server {
         this.config = config
 
         this.restify = restify.createServer(config.options)
+
         this.addPlugins()
 
         controllers.forEach((h: RouteHandler) => {
@@ -28,6 +30,17 @@ export class Server {
 
     private addPlugins() {
         this.restify.use(restify.plugins.queryParser())
+        this.restify.use(restify.plugins.bodyParser())
+
+        const cors = corsMiddleware({
+            preflightMaxAge: 5, //Optional
+            origins: ['*'],
+            allowHeaders: ['API-Token'],
+            exposeHeaders: ['API-Token-Expiry'],
+        })
+
+        this.restify.pre(cors.preflight)
+        this.restify.use(cors.actual)
     }
 
     /**
