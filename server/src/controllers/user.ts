@@ -12,7 +12,7 @@ import {
     UserAuthenticationError,
     UserCreationObject,
     UserCreationError,
-} from '../services/userManager'
+} from '../services/user-manager'
 
 export interface JwtData {
     uid: number
