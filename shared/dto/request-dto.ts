@@ -13,6 +13,13 @@ export type editArticleDTO = {
 export type getArticlesDTO = {
     skip?: number
     take?: number
+    includeCreator?: string
+}
+
+export type getArticleDTO = {
+    includeCreator?: string
+    includeComments?: string
+    // includeVotes?: string
 }
 
 export type createCommentDTO = {
