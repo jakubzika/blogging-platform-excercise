@@ -6,6 +6,7 @@ import {
     ManyToOne,
     BaseEntity,
     CreateDateColumn,
+    RelationId,
 } from 'typeorm'
 
 import { Article } from './article'
@@ -20,8 +21,14 @@ export class Comment extends BaseEntity {
     @ManyToOne(() => Article, (article) => article.comments, { onDelete: 'CASCADE' })
     article: Article
 
+    @RelationId((comment: Comment) => comment.article)
+    articleId: number
+
     @ManyToOne(() => User, (user) => user.comments)
     creator: User
+
+    @RelationId((comment: Comment) => comment.creator)
+    creatorId: number
 
     @Column('text')
     content: string
