@@ -6,10 +6,19 @@ import { Router } from '../router'
 
 import { User } from '../entity/user'
 import { Article } from '../entity/article'
-import { JwtData } from './user'
-import { getArticlesDTO, createArticleDTO, editArticleDTO } from './dto'
+import { JwtData } from './userLogin'
+import {
+    getArticlesDTO,
+    getArticleDTO,
+    createArticleDTO,
+    editArticleDTO,
+} from '../../../shared/dto/request-dto'
 import { ArticleRepository } from '../repositories/article'
 import { DatabaseProvider } from '../database'
+
+import { mapArticleDTO, mapArticlestoDTO } from '../lib/dto-mapper'
+import { listArticlesResponseDTO } from '../../../shared/dto/response-dto'
+import { queryParamToBool } from '../lib/util'
 
 export class ArticleController implements RouteHandler {
     articleRepository: ArticleRepository
@@ -29,20 +38,29 @@ export class ArticleController implements RouteHandler {
     }
 
     async list(req: Request, res: Response, next: Next) {
+        // TODO: Check query validity
         const queryParams: getArticlesDTO = req.query
 
         let articles: Article[]
 
-        if (queryParams.skip && queryParams.take) {
-            articles = await this.articleRepository.find({
-                skip: queryParams.skip,
-                take: queryParams.take,
-            })
-        } else {
-            articles = await this.articleRepository.find({})
+        let dbQuery: any = {
+            relations: [],
         }
 
-        res.send(articles)
+        console.log(queryParams)
+
+        if (queryParams.skip && queryParams.take) {
+            dbQuery.skip = queryParams.skip
+            dbQuery.take = queryParams.take
+        }
+        if (queryParams.includeCreator && queryParamToBool(queryParams.includeCreator)) {
+            dbQuery.relations.push('creator')
+        }
+
+        articles = await this.articleRepository.find(dbQuery)
+
+        const response: listArticlesResponseDTO = mapArticlestoDTO(articles)
+        res.send(response)
         next()
     }
 
@@ -55,46 +73,53 @@ export class ArticleController implements RouteHandler {
         let articleId: number
 
         articleId = parseInt(req.params.article, 10)
+        const queryParams: getArticleDTO = req.query
+
+        let dbQuery: any = {
+            relations: [],
+        }
+
+        if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
+            dbQuery.relations.push('comments')
+        }
+        if (queryParams.includeCreator && queryParamToBool(queryParams.includeCreator)) {
+            dbQuery.relations.push('creator')
+        }
 
         if (isNaN(articleId)) {
             next(new errors.BadRequestError('Invalid article id'))
             return
         }
 
-        this.articleRepository
-            .findOne({ id: articleId })
-            .then((article) => {
-                if (article == undefined) {
-                    next(new errors.BadRequestError('Could not find article with given id'))
-                } else {
-                    res.send(article)
-                    next()
-                }
-            })
-            .catch((err) => {
-                next(new errors.InternalServerError('Error while accesing database'))
-            })
+        let article: Article = await this.articleRepository.findOne(articleId, dbQuery)
+
+        if (article == undefined) {
+            next(new errors.BadRequestError('Could not find article with given id'))
+        } else {
+            res.send(mapArticleDTO(article))
+            next()
+        }
     }
 
     async create(req: Request, res: Response, next: Next) {
         let article = new Article()
 
-        // sad walkaround because Request property has not specified user type when authentication is enabled
+        // this must be of the form req['user'], Typescript cannot infer such information
         const userJwt: JwtData = req['user']
 
-        const articelDTO: createArticleDTO = req.body
+        const articleDTO: createArticleDTO = req.body
 
         const user: User = await User.findOne({ id: userJwt.uid })
 
-        // TODO: there could also be mapper functions to map between DTO and database entity
-        article.content = articelDTO.content
-        article.perex = articelDTO.perex
-        article.title = articelDTO.title
+        // TODO: use mapper
+        article.content = articleDTO.content
+        article.perex = articleDTO.perex
+        article.title = articleDTO.title
         article.creator = user
 
         article = await this.articleRepository.save(article)
 
-        res.send(article)
+        res.send(mapArticleDTO(article))
         next()
     }
 
@@ -120,7 +145,7 @@ export class ArticleController implements RouteHandler {
 
         await this.articleRepository.save(article)
 
-        res.send(article)
+        res.send(mapArticleDTO(article))
         next()
     }
 
