@@ -8,17 +8,24 @@ import { User } from '../entity/user'
 import { Article } from '../entity/article'
 import { JwtData } from './user'
 import { getArticlesDTO, createArticleDTO, editArticleDTO } from './dto'
+import { ArticleRepository } from '../repositories/article'
+import { DatabaseProvider } from '../database'
 
 export class ArticleController implements RouteHandler {
-    registerHandler(router: Router) {
-        router.setBase('/article')
+    articleRepository: ArticleRepository
 
-        router.get('/', this.list)
-        router.get('/by/:user', this.listByUser)
-        router.get('/:article', this.get)
-        router.post('/', this.create, { authentication: true })
-        router.patch('/:article', this.update, { authentication: true })
-        router.del('/:article', this.delete, { authentication: true })
+    async registerHandler(router: Router) {
+        this.articleRepository = (await DatabaseProvider.getConnection()).getCustomRepository(
+            ArticleRepository
+        )
+
+        router.setBase('/article')
+        router.get('/', this.list.bind(this))
+        router.get('/by/:user', this.listByUser.bind(this))
+        router.get('/:article', this.get.bind(this))
+        router.post('/', this.create.bind(this), { authentication: true })
+        router.patch('/:article', this.update.bind(this), { authentication: true })
+        router.del('/:article', this.delete.bind(this), { authentication: true })
     }
 
     async list(req: Request, res: Response, next: Next) {
@@ -27,10 +34,12 @@ export class ArticleController implements RouteHandler {
         let articles: Article[]
 
         if (queryParams.skip && queryParams.take) {
-            articles = await Article.find({ skip: queryParams.skip, take: queryParams.take })
+            articles = await this.articleRepository.find({
+                skip: queryParams.skip,
+                take: queryParams.take,
+            })
         } else {
-            // this option could be removed as it allows scraping of all articles
-            articles = await Article.find({})
+            articles = await this.articleRepository.find({})
         }
 
         res.send(articles)
@@ -52,7 +61,8 @@ export class ArticleController implements RouteHandler {
             return
         }
 
-        Article.findOne({ id: articleId })
+        this.articleRepository
+            .findOne({ id: articleId })
             .then((article) => {
                 if (article == undefined) {
                     next(new errors.BadRequestError('Could not find article with given id'))
@@ -82,7 +92,7 @@ export class ArticleController implements RouteHandler {
         article.title = articelDTO.title
         article.creator = user
 
-        article = await Article.save(article)
+        article = await this.articleRepository.save(article)
 
         res.send(article)
         next()
@@ -95,7 +105,7 @@ export class ArticleController implements RouteHandler {
         const articleId = req.params.article
 
         const [article, user] = await Promise.all([
-            Article.findOne(articleId),
+            this.articleRepository.findOne(articleId),
             User.findOne({ id: userId }),
         ])
         if (article === undefined) {
@@ -108,7 +118,7 @@ export class ArticleController implements RouteHandler {
         article.perex = editArticleDTO.perex
         article.title = editArticleDTO.title
 
-        await Article.save(article)
+        await this.articleRepository.save(article)
 
         res.send(article)
         next()
@@ -117,7 +127,7 @@ export class ArticleController implements RouteHandler {
     async delete(req: Request, res: Response, next: Next) {
         const articleId = req.params.article
 
-        const article = await Article.findOne(articleId)
+        const article = await this.articleRepository.findOne(articleId)
 
         if (article === undefined) {
             next(new errors.NotFoundError('Article with given id does not exist'))
