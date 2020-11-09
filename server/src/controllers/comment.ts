@@ -3,7 +3,7 @@ import errors from 'restify-errors'
 
 import { RouteHandler } from './route'
 import { Router } from '../router'
-import { createCommentDTO } from './dto'
+import { createCommentDTO } from '../../../shared/dto/request-dto'
 import { Article } from '../entity/article'
 import { Comment } from '../entity/comment'
 import { User } from '../entity/user'
