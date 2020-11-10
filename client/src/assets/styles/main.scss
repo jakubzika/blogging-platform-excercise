@@ -1,5 +1,7 @@
 @import 'variables.scss';
+@import 'fonts.scss';
 
 body {
     background-color: $back-color;
+    font-family: Aileron;
 }
