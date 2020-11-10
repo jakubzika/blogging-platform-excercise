@@ -19,6 +19,7 @@ import { DatabaseProvider } from '../database'
 import { mapArticleDTO, mapArticlestoDTO } from '../lib/dto-mapper'
 import { listArticlesResponseDTO } from '../../../shared/dto/response-dto'
 import { queryParamToBool } from '../lib/util'
+import { FindOneOptions } from 'typeorm'
 
 export class ArticleController implements RouteHandler {
     articleRepository: ArticleRepository
@@ -47,8 +48,6 @@ export class ArticleController implements RouteHandler {
             relations: [],
         }
 
-        console.log(queryParams)
-
         if (queryParams.skip && queryParams.take) {
             dbQuery.skip = queryParams.skip
             dbQuery.take = queryParams.take
@@ -75,8 +74,9 @@ export class ArticleController implements RouteHandler {
         articleId = parseInt(req.params.article, 10)
         const queryParams: getArticleDTO = req.query
 
-        let dbQuery: any = {
+        let dbQuery: FindOneOptions<Article> = {
             relations: [],
+            select: ['id', 'title', 'perex', 'created', 'content'],
         }
 
         if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
@@ -96,7 +96,7 @@ export class ArticleController implements RouteHandler {
         if (article == undefined) {
             next(new errors.BadRequestError('Could not find article with given id'))
         } else {
-            res.send(mapArticleDTO(article))
+            res.send({ article: mapArticleDTO(article) })
             next()
         }
     }
