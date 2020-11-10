@@ -16,7 +16,7 @@ import {
 import { ArticleRepository } from '../repositories/article'
 import { DatabaseProvider } from '../database'
 
-import { mapArticleDTO, mapArticlestoDTO } from '../lib/dto-mapper'
+import { mapArticleDTO, mapArticlesDTO, mapArticlesWithCreatorsDTO } from '../lib/dto-mapper'
 import { listArticlesResponseDTO } from '../../../shared/dto/response-dto'
 import { queryParamToBool } from '../lib/util'
 import { FindOneOptions } from 'typeorm'
@@ -28,6 +28,9 @@ export class ArticleController implements RouteHandler {
         this.articleRepository = (await DatabaseProvider.getConnection()).getCustomRepository(
             ArticleRepository
         )
+        // this.userRepository = (await DatabaseProvider.getConnection()).getC(
+        //     ArticleRepository
+        // )
 
         router.setBase('/article')
         router.get('/', this.list.bind(this))
@@ -42,23 +45,28 @@ export class ArticleController implements RouteHandler {
         // TODO: Check query validity
         const queryParams: getArticlesDTO = req.query
 
-        let articles: Article[]
+        let articles: Article[] = []
+        let creators: User[] = []
 
-        let dbQuery: any = {
-            relations: [],
+        let response: listArticlesResponseDTO
+        if (queryParamToBool(queryParams.includeCreator)) {
+            let result = await this.articleRepository.getArticlesWithCreators({
+                skip: queryParams.skip,
+                take: queryParams.take,
+            })
+            articles = result.articles
+            creators = result.users
+
+            response = mapArticlesWithCreatorsDTO(articles, creators)
+        } else {
+            articles = await this.articleRepository.getArticles({
+                skip: queryParams.skip,
+                take: queryParams.take,
+            })
+
+            response = mapArticlesDTO(articles)
         }
 
-        if (queryParams.skip && queryParams.take) {
-            dbQuery.skip = queryParams.skip
-            dbQuery.take = queryParams.take
-        }
-        if (queryParams.includeCreator && queryParamToBool(queryParams.includeCreator)) {
-            dbQuery.relations.push('creator')
-        }
-
-        articles = await this.articleRepository.find(dbQuery)
-
-        const response: listArticlesResponseDTO = mapArticlestoDTO(articles)
         res.send(response)
         next()
     }
