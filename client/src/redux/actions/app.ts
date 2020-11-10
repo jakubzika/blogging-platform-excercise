@@ -1,9 +1,10 @@
-import { AppActionType, TESTING_ACTION, AppThunk, SET_ARTICLES } from './types'
+import { AppActionType, TESTING_ACTION, AppThunk, SET_ARTICLES, SET_USERS } from './types'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
 import { Action } from 'redux'
 import api from '../../lib/api'
-import { Article, ArticleID } from '../../types'
+import { Article, ArticleID, User } from '../../types'
+import { useStore } from 'react-redux'
 
 export function testingAction(msg: string): AppActionType {
     return {
@@ -15,14 +16,24 @@ export function testingAction(msg: string): AppActionType {
 export function setArticles(articles: Article[]): AppActionType {
     return {
         type: SET_ARTICLES,
-        articles: articles,
+        articles,
+    }
+}
+
+export function setUsers(users: User[]) {
+    console.log('set users')
+    return {
+        type: SET_USERS,
+        users,
     }
 }
 
 export function loadArticles(): AppThunk {
     return async (dispatch) => {
-        const articles = await api.getArticles()
-        dispatch(setArticles(articles))
+        const response = await api.getArticles()
+        dispatch(setArticles(response.articles))
+        console.log('creators', response.creators)
+        if (response.creators) dispatch(setUsers(response.creators))
     }
 }
 

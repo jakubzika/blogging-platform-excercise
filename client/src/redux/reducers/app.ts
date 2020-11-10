@@ -1,5 +1,5 @@
 import { Article, User, ArticleID } from '../../types'
-import { AppActionType, TESTING_ACTION, SET_ARTICLES } from '../actions/types'
+import { AppActionType, TESTING_ACTION, SET_ARTICLES, SET_USERS } from '../actions/types'
 
 export interface State {
     articles: { [key: number]: Article }
@@ -27,8 +27,19 @@ export default function appReducer(state: State = initialState, action: AppActio
                 ...state,
                 articles: {
                     ...state.articles,
-                    ...action.articles.reduce((map, article: Article) => {
+                    ...action.articles.reduce((map, article) => {
                         map[article.id.valueOf()] = article
+                        return map
+                    }, {}),
+                },
+            }
+        case SET_USERS:
+            return {
+                ...state,
+                users: {
+                    ...state.users,
+                    ...action.users.reduce((map, user) => {
+                        map[user.id.valueOf()] = user
                         return map
                     }, {}),
                 },
