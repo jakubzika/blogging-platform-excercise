@@ -1,9 +1,16 @@
-import { State } from '../../types'
-import { AppActionType, TESTING_ACTION } from '../actions/types'
+import { Article, User, ArticleID } from '../../types'
+import { AppActionType, TESTING_ACTION, SET_ARTICLES } from '../actions/types'
+
+export interface State {
+    articles: { [key: number]: Article }
+    users: { [key: number]: User }
+    loading: Boolean
+    message: String
+}
 
 const initialState: State = {
-    articles: [],
-    users: [],
+    articles: {},
+    users: {},
     loading: false,
     message: '',
 }

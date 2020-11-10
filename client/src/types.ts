@@ -6,45 +6,35 @@ import {
     responseDTO,
     userDTO,
 } from '../../shared/dto/response-dto'
+import { State } from './redux/reducers/app'
 
 // TODO: types could be move to their appropriate locations, otherwise this file will only grow ugly
 
-export type UserID = Number
+export type UserID = number
 export interface User {
     id: UserID
-    name: String
-    email: String
+    name: string
+    email?: string
 }
 
-export type CommentID = Number
+export type CommentID = number
 export interface ArticleComment {
     id: CommentID
     creator: UserID
-    content: String
+    content: string
     created: Date
 }
 
-export type ArticleID = Number
-export type Votes = Number
+export type ArticleID = number
+export type Votes = number
 export interface Article {
     id: ArticleID
-    title: String
-    author: Number
-    perex: String
-    content?: String
-    loaded: Boolean
+    title: string
+    creator: UserID | User
+    perex: string
+    content?: string
+    loaded: boolean
     created: Date
     edited?: Date
     votes: Votes
-}
-
-export interface State {
-    articles: Article[]
-    users: User[]
-    loading: Boolean
-    message: String
-}
-
-export interface AppState {
-    app: State
 }

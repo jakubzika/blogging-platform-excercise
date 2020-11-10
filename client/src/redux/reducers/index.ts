@@ -6,4 +6,6 @@ const reducer = combineReducers({
     app: appReducer,
 })
 
+export type AppState = ReturnType<typeof reducer>
+
 export default reducer
