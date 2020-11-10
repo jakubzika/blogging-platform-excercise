@@ -8,4 +8,5 @@
       "outDir": "../dist/client",
       "jsx": "react"
     },
+    "include": ["src/**/*", "../shared/dto/dto.ts"]
   }

@@ -25,7 +25,7 @@ export class Article extends BaseEntity {
     @Column()
     perex: string
 
-    @Column('text')
+    @Column('text', { select: false })
     content: string
 
     @CreateDateColumn()
