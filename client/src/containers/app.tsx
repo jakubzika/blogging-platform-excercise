@@ -1,8 +1,9 @@
 import {connect} from 'react-redux'
 import React from 'react'
-import { testingAction } from '../redux/actions/app'
-import { State, AppState } from '../types'
+import {Route, Switch} from 'react-router'
 
+import { testingAction } from '../redux/actions/app'
+import {AppState} from '../redux/reducers/index'
 
 
 export interface AppProps {
@@ -19,15 +20,19 @@ class App extends React.Component<AppProps> {
     render() {
         return(
             <div>
-                Blog test {this.props.message}
-                <button onClick={() => this.props.introduction('testing')}>click me</button>
+                <Switch>
+                    <Route path="/"></Route>
+                    <Route path="/article/:id" ></Route>
+                    <Route path="/profile" ></Route>
+                    <Route path="/login" ></Route>
+                </Switch>
+                
             </div>
         )
     }
 }
 
 const mapStateToProps = (state:AppState)  => {
-    console.log(state)
     return ({
         message: state.app.message
     })
