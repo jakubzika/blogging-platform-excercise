@@ -32,11 +32,10 @@ class App extends React.Component<AppProps> {
     }
 }
 
-const mapStateToProps = (state:AppState)  => {
-    return ({
+const mapStateToProps = (state:AppState) => ({
         message: state.app.message
     })
-}
+
 
 const mapDispatchToProps = dispatch => ({
     introduction: (arg: string) => {
