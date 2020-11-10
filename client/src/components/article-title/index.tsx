@@ -1,5 +1,5 @@
 import React from 'react'
-import { Article } from '../types';
+import { Article } from '../../types';
 
 export interface ArticleTitleProps {
     article: Article,

@@ -3,7 +3,7 @@ import {connect, ConnectedProps} from 'react-redux'
 import { Article, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
 import { loadArticles, loadArticle } from '../redux/actions/app'
-import { ArticleTitleList } from '../components/article-title-list'
+import { ArticleTitleList } from '../components/article-title-list/index'
 
 
 
