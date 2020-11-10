@@ -22,6 +22,17 @@ export default function appReducer(state: State = initialState, action: AppActio
                 ...state,
                 message: action.payload,
             }
+        case SET_ARTICLES:
+            return {
+                ...state,
+                articles: {
+                    ...state.articles,
+                    ...action.articles.reduce((map, article: Article) => {
+                        map[article.id.valueOf()] = article
+                        return map
+                    }, {}),
+                },
+            }
         default:
             return state
     }
