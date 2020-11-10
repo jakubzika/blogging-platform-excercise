@@ -6,3 +6,5 @@ config.yml
 dist/*
 client/yarn-error.log
 server/yarn-error.log
+
+*scss.d.ts

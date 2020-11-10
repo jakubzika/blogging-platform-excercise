@@ -20,7 +20,7 @@ module.exports = {
                 exclude: '/node_modules/'
             },
             {
-                test: /\.css$/i,
+                test: /\.scss$/i,
                 use: [
                   "style-loader",
                   "@teamsupercell/typings-for-css-modules-loader",

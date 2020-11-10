@@ -4,6 +4,8 @@ import React from 'react'
 import thunk from 'redux-thunk'
 import {BrowserRouter} from 'react-router-dom'
 
+const style = require('./assets/styles/main.scss')
+
 import reducer from './redux/reducers/index'
 import { Provider } from 'react-redux'
 
