@@ -34,6 +34,7 @@ export const mapArticleDTO = (article: Article): articleDTO => ({
             ? mapUserDTO(article.creator)
             : article.creatorId,
     comments: article.comments ? article.comments.map(mapCommentDTO) : null,
+    votes: 0, // TODO: implement votes
 })
 
 export const mapArticlestoDTO = (articles: Article[]): listArticlesResponseDTO => ({

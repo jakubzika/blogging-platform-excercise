@@ -19,7 +19,9 @@ export type articleDTO = {
     content?: string
     creator: number | userDTO
     created: string
+    edited?: string
     comments: commentDTO[]
+    votes: number
 }
 
 export type listArticlesResponseDTO = {
