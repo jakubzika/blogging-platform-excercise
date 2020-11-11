@@ -30,7 +30,7 @@ export type Votes = number
 export interface Article {
     id: ArticleID
     title: string
-    creator: UserID | User
+    creator: UserID
     perex: string
     content?: string
     loaded: boolean
