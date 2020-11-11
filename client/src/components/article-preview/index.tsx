@@ -1,5 +1,8 @@
 import React from 'react'
 import { Article, User } from '../../types'
+import {Link} from 'react-router-dom'
+import moment from 'moment'
+
 import style from './style.scss'
 
 export interface ArticlePreviewProps {
@@ -9,15 +12,23 @@ export interface ArticlePreviewProps {
 }
 
 export function ArticlePreview({article,user,load}: ArticlePreviewProps) {
-    console.log(user)
     return(
         <div className={style.Article}>
-            <h2>{article.id} - {article.title}</h2>
-            <span>{article.perex}</span>
-            <p>{article.content}</p>
-            <span>{user && user.name}</span>
+            <h2 className={style.Title}>{article.title}</h2>
+            <div className={style.SubInformation}>
+                <span>
+                    {user && user.name}
+                </span>
+                <span className={style.SeparatorDot}></span>
+                <span>
+                    {moment(article.created).fromNow()}
+                </span>
+            </div>
+            <p className={style.Perex}>{article.perex}</p>
             <div>
-                <button onClick={load}> read more</button>
+                <Link to={`/article/${article.id}`} onClick={load} className={style.ReadMore}>
+                    Read whole article
+                </Link>
             </div>
         </div>
     )

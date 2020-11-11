@@ -3,6 +3,8 @@ import { Article, User } from '../../types'
 import { ArticlePreview } from '../article-preview'
 import { loadArticle } from '../../redux/actions/app'
 
+import style from './style.scss'
+
 export interface ArticlePreviewListProps {
     articles: Article[],
     users: {[key: number]: User}
@@ -11,7 +13,7 @@ export interface ArticlePreviewListProps {
 
 export function ArticlePreviewList({loadArticle,articles,users}: ArticlePreviewListProps) {
     return(
-        <div>
+        <div className={style.ArticlePreviewList}>
                 {articles.map((article) => (
                     <ArticlePreview
                         key={article.id.valueOf()}
