@@ -92,9 +92,9 @@ export class ArticleController implements RouteHandler {
             where: { id: articleId },
         }
 
-        if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
-            dbQuery.relations.push('comments')
-        }
+        // if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
+        //     dbQuery.relations.push('comments')
+        // }
         if (queryParams.includeCreator && queryParamToBool(queryParams.includeCreator)) {
             dbQuery.relations.push('creator')
         }

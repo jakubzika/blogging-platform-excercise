@@ -18,8 +18,12 @@ export type getArticlesDTO = {
 
 export type getArticleDTO = {
     includeCreator?: string
-    includeComments?: string
+    // includeComments?: string
     // includeVotes?: string
+}
+
+export type getCommentDTO = {
+    includeUsers?: string
 }
 
 export type createCommentDTO = {

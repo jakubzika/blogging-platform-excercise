@@ -1,7 +1,7 @@
 export type commentDTO = {
     id: number
-    article: number | articleDTO
-    creator: number | userDTO
+    article: number
+    creator: number
     content: string
     created: string
 }
