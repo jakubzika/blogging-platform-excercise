@@ -34,12 +34,14 @@ class MainPage extends React.Component<MainPageProps> {
     }
 
     render() {
+        const sortedArticlesByDate: Article[] = Object.values(this.props.articles).sort((a:any,b:any) => b.created - a.created)
+
         return (
             <div className={style.MainPage}>
                 <Title>Recent articles</Title>
                 <ArticlePreviewList
                     loadArticle={this.props.loadArticle}
-                    articles={Object.values(this.props.articles)}
+                    articles={sortedArticlesByDate}
                     users={this.props.users}
                 />
             </div>
