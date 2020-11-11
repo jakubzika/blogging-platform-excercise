@@ -4,8 +4,9 @@ import { Article, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
 import { loadArticles, loadArticle } from '../redux/actions/app'
 import { ArticleTitleList } from '../components/article-title-list/index'
+import { Title } from '../components/title'
 
-
+import style from '../assets/styles/containers.scss'
 
 const mapStateToProps = (state: AppState) => ({
     articles: state.app.articles,
@@ -33,10 +34,16 @@ class MainPage extends React.Component<MainPageProps> {
     }
 
     render() {
-        return(<div>main page
-
-            <ArticleTitleList loadArticle={this.props.loadArticle} articles={Object.values(this.props.articles)} users={this.props.users}/>
-        </div>)
+        return (
+            <div className={style.MainPage}>
+                <Title>Recent articles</Title>
+                <ArticleTitleList
+                    loadArticle={this.props.loadArticle}
+                    articles={Object.values(this.props.articles)}
+                    users={this.props.users}
+                />
+            </div>
+        )
     }
 }
 
