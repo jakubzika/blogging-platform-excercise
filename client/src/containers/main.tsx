@@ -35,7 +35,7 @@ class MainPage extends React.Component<MainPageProps> {
     render() {
         return(<div>main page
 
-            <ArticleTitleList loadArticle={this.props.loadArticle} articles={Object.values(this.props.articles)}/>
+            <ArticleTitleList loadArticle={this.props.loadArticle} articles={Object.values(this.props.articles)} users={this.props.users}/>
         </div>)
     }
 }
