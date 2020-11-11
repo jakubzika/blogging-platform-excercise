@@ -34,6 +34,11 @@ export type getArticleResponseDTO = {
     creator?: userDTO
 }
 
+export type getCommentsResponseDTO = {
+    comments: commentDTO[]
+    users?: userDTO[]
+}
+
 export type responseDTO = {
     response: getArticleResponseDTO | listArticlesResponseDTO // TODO: many more
 }

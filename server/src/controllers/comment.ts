@@ -1,19 +1,54 @@
 import { Request, Response, Next } from 'restify'
 import errors from 'restify-errors'
+import { map, uniqBy } from 'lodash'
 
 import { RouteHandler } from './route'
 import { Router } from '../router'
-import { createCommentDTO } from '../../../shared/dto/request-dto'
+import { createCommentDTO, getCommentDTO } from '../../../shared/dto/request-dto'
 import { Article } from '../entity/article'
 import { Comment } from '../entity/comment'
 import { User } from '../entity/user'
+import { FindManyOptions } from 'typeorm'
+import { mapGetCommentsDTO } from '../lib/dto-mapper'
+import { queryParamToBool } from '../lib/util'
 
 export class CommentController implements RouteHandler {
     registerHandler(router: Router) {
         router.setBase('/article/:article/comment')
 
+        router.get('/', this.list)
         router.post('/', this.create, { authentication: true })
         router.del('/:comment', this.delete, { authentication: true })
+    }
+
+    async list(req: Request, res: Response, next: Next) {
+        const articleId = req.params.article
+
+        const queryparams: getCommentDTO = req.query
+
+        let comments: Comment[] = []
+        let users: User[] = null
+
+        let dbQuery: FindManyOptions = {
+            relations: [],
+            where: { article: articleId },
+        }
+
+        if (queryParamToBool(queryparams.includeUsers)) {
+            dbQuery.relations.push('creator')
+        }
+
+        comments = await Comment.find(dbQuery)
+
+        if (queryParamToBool(queryparams.includeUsers)) {
+            users = uniqBy(
+                map(comments, (c) => c.creator),
+                'id'
+            )
+        }
+
+        res.send(mapGetCommentsDTO(comments, users))
+        next()
     }
 
     async create(req: Request, res: Response, next: Next) {

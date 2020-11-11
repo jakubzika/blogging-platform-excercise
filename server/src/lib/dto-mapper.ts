@@ -5,6 +5,7 @@ import {
     userDTO,
     listArticlesResponseDTO,
     commentDTO,
+    getCommentsResponseDTO,
 } from '../../../shared/dto/response-dto'
 import { User } from '../entity/user'
 import { Comment } from '../entity/comment'
@@ -43,5 +44,10 @@ export const mapArticlesWithCreatorsDTO = (
     creators?: User[]
 ): listArticlesResponseDTO => ({
     articles: articles.map((a) => mapArticleDTO(a, true)),
-    creators: creators.map((u) => mapUserDTO(u)),
+    creators: creators.map((u) => mapUserDTO(u, true)),
+})
+
+export const mapGetCommentsDTO = (comments: Comment[], users?: User[]): getCommentsResponseDTO => ({
+    comments: comments.map(mapCommentDTO),
+    users: users ? users.map((u) => mapUserDTO(u, true)) : null,
 })
