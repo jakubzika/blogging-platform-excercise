@@ -12,7 +12,7 @@ export class ArticleRepository extends Repository<Article> {
 
     // derive
 
-    public async getArticles(options: { skip?: number; take?: number }): Promise<Article[]> {
+    public async getArticles(options?: { skip?: number; take?: number }): Promise<Article[]> {
         let dbQuery: any = {}
 
         if (options.skip && options.take) {
@@ -44,7 +44,6 @@ export class ArticleRepository extends Repository<Article> {
             map(articles, (a) => a.creator),
             'id'
         )
-        console.log(users)
 
         return { articles, users }
     }

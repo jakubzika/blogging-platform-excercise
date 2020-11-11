@@ -23,16 +23,13 @@ export const mapCommentDTO = (comment: Comment): commentDTO => ({
     creator: comment.creatorId,
 })
 
-export const mapArticleDTO = (article: Article, omitCreator: boolean = false): articleDTO => ({
+export const mapArticleDTO = (article: Article, omitContent: boolean = false): articleDTO => ({
     id: article.id,
     title: article.title,
     perex: article.perex,
-    content: article.content,
+    content: !omitContent && article.content,
     created: article.created,
-    creator:
-        article.creator && typeof article.creator === 'object' && !omitCreator
-            ? mapUserDTO(article.creator, true)
-            : article.creatorId,
+    creator: article.creatorId,
     comments: article.comments ? article.comments.map(mapCommentDTO) : null,
     votes: 0, // TODO: implement votes
 })

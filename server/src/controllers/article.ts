@@ -16,7 +16,12 @@ import {
 import { ArticleRepository } from '../repositories/article'
 import { DatabaseProvider } from '../database'
 
-import { mapArticleDTO, mapArticlesDTO, mapArticlesWithCreatorsDTO } from '../lib/dto-mapper'
+import {
+    mapArticleDTO,
+    mapArticlesDTO,
+    mapArticlesWithCreatorsDTO,
+    mapUserDTO,
+} from '../lib/dto-mapper'
 import { listArticlesResponseDTO } from '../../../shared/dto/response-dto'
 import { queryParamToBool } from '../lib/util'
 import { FindOneOptions } from 'typeorm'
@@ -84,7 +89,7 @@ export class ArticleController implements RouteHandler {
 
         let dbQuery: FindOneOptions<Article> = {
             relations: [],
-            select: ['id', 'title', 'perex', 'created', 'content'],
+            where: { id: articleId },
         }
 
         if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
@@ -99,12 +104,15 @@ export class ArticleController implements RouteHandler {
             return
         }
 
-        let article: Article = await this.articleRepository.findOne(articleId, dbQuery)
+        let article: Article = await this.articleRepository.findOne(dbQuery)
 
         if (article == undefined) {
             next(new errors.BadRequestError('Could not find article with given id'))
         } else {
-            res.send({ article: mapArticleDTO(article) })
+            res.send({
+                article: mapArticleDTO(article),
+                creator: article.creator && mapUserDTO(article.creator),
+            })
             next()
         }
     }

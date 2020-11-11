@@ -31,6 +31,7 @@ export type listArticlesResponseDTO = {
 
 export type getArticleResponseDTO = {
     article: articleDTO
+    creator?: userDTO
 }
 
 export type responseDTO = {
