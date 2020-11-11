@@ -23,6 +23,7 @@ export default function appReducer(state: State = initialState, action: AppActio
                 message: action.payload,
             }
         case SET_ARTICLES:
+            //TODO: no overwriting of loaded content
             return {
                 ...state,
                 articles: {

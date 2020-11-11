@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { getArticleResponseDTO, listArticlesResponseDTO } from '../../../shared/dto/response-dto'
-import { mapFromArticlesDTO, mapFromArticleDTO } from './dto-mapper'
+import { mapFromArticlesDTO, mapFromArticleDTO, mapFromUserDTO } from './dto-mapper'
 import { Article, ArticleID, User } from '../types'
 import { boolToString } from './util'
 
@@ -22,7 +22,7 @@ const getArticle = (
     id: ArticleID,
     includeContent: boolean = true,
     includeCreator: boolean = true
-): Promise<Article> => {
+): Promise<{ article: Article; creator: User }> => {
     // TODO: DTO mapper
     return axios
         .get<getArticleResponseDTO>(`/article/${id.valueOf()}`, {
@@ -31,12 +31,12 @@ const getArticle = (
                 includeCreator: boolToString(includeCreator),
             },
         })
-        .then(
-            (response): Article => {
-                console.log(mapFromArticleDTO(response.data.article))
-                return mapFromArticleDTO(response.data.article)
+        .then((response) => {
+            return {
+                article: mapFromArticleDTO(response.data.article),
+                creator: mapFromUserDTO(response.data.creator),
             }
-        )
+        })
 }
 
 export default {

@@ -39,11 +39,12 @@ export function loadArticles(): AppThunk {
 
 export function loadArticle(
     id: ArticleID,
-    content: boolean = true,
-    creator: boolean = true
+    includeContent: boolean = true,
+    includeCreator: boolean = true
 ): AppThunk {
     return async (dispatch) => {
-        const article = await api.getArticle(id, creator, content)
+        const { article, creator } = await api.getArticle(id, includeCreator, includeContent)
         dispatch(setArticles([article]))
+        dispatch(setUsers([creator]))
     }
 }
