@@ -17,7 +17,7 @@ export type articleDTO = {
     title: string
     perex: string
     content?: string
-    creator: number | userDTO
+    creator: number
     created: string
     edited?: string
     comments: commentDTO[]
