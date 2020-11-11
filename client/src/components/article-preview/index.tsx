@@ -2,13 +2,13 @@ import React from 'react'
 import { Article, User } from '../../types'
 import style from './style.scss'
 
-export interface ArticleTitleProps {
+export interface ArticlePreviewProps {
     article: Article,
     user: User,
     load: ()=>void,
 }
 
-export function ArticleTitle({article,user,load}: ArticleTitleProps) {
+export function ArticlePreview({article,user,load}: ArticlePreviewProps) {
     console.log(user)
     return(
         <div className={style.Article}>

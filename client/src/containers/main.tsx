@@ -3,7 +3,7 @@ import {connect, ConnectedProps} from 'react-redux'
 import { Article, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
 import { loadArticles, loadArticle } from '../redux/actions/app'
-import { ArticleTitleList } from '../components/article-title-list/index'
+import { ArticlePreviewList } from '../components/article-preview-list/index'
 import { Title } from '../components/title'
 
 import style from '../assets/styles/containers.scss'
@@ -37,7 +37,7 @@ class MainPage extends React.Component<MainPageProps> {
         return (
             <div className={style.MainPage}>
                 <Title>Recent articles</Title>
-                <ArticleTitleList
+                <ArticlePreviewList
                     loadArticle={this.props.loadArticle}
                     articles={Object.values(this.props.articles)}
                     users={this.props.users}
