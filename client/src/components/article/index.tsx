@@ -5,13 +5,16 @@ import { Article, User } from "../../types"
 import { Title } from '../title'
 
 import style from './style.scss'
+import { CommentsList } from '../comments-list'
 
 export interface ArticleProps {
     article: Article
     creator: User
+    users: {[key: number]: User}
 }
 
-export function Article({article,creator}: ArticleProps) {
+export function Article({article,creator,users}: ArticleProps) {
+
     return (
         <div>
             <Title>{article.title}</Title>
@@ -27,6 +30,9 @@ export function Article({article,creator}: ArticleProps) {
             <p className={style.Content}>
                 {article.content}
             </p>
+            <hr className={style.Separator} />
+            <h2>Comments {article.comments && ` (${article.comments.length})`}</h2>
+            {article.comments && <CommentsList comments={article.comments} users={users}/>}
         </div>
     )
 }

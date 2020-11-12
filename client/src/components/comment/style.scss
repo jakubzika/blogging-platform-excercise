@@ -1,0 +1,24 @@
+@import '../../assets/styles/variables.scss';
+
+.Comment {
+    color: black;
+
+    &Head {
+        margin-bottom: 0;
+    }
+    margin-bottom: 2em;
+}
+
+.Content {
+    margin-top: 0.6em;
+}
+
+.Name {
+    font-weight: bold;
+    margin-right: 1em;
+}
+
+.Created {
+    color: $base-color-dim;
+    font-size: 0.8em;
+}

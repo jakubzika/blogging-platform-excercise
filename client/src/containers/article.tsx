@@ -2,13 +2,14 @@ import React from 'react'
 import {connect, ConnectedProps} from 'react-redux'
 import { Article as ArticleType, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
-import { loadArticles, loadArticle } from '../redux/actions/app'
+import { loadArticles, loadArticle, loadComments } from '../redux/actions/app'
 
 import { Article } from '../components/article'
 import { Title } from '../components/title'
 
 import style from '../assets/styles/containers.scss'
 import { match } from 'react-router-dom'
+import api from '../lib/api'
 
 const mapStateToProps = (state: AppState) => ({
     articles: state.app.articles,
@@ -17,7 +18,9 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = dispatch => ({
     loadArticles: () => dispatch(loadArticles()),
-    loadArticle: (id, content, creator) => dispatch(loadArticle(id,content,creator))
+    loadArticle: (id, content, creator) => dispatch(loadArticle(id,content,creator)),
+    loadComments: (articleId) => dispatch(loadComments(articleId))
+
 })
 
 const connector = connect(mapStateToProps,mapDispatchToProps)
@@ -34,11 +37,11 @@ class ArticlePage extends React.Component<ArticlePageProps> {
         super(props)
         const articleId = props.match.params.id
         if(!props.articles[articleId] || !props.articles[articleId].loaded) props.loadArticle(articleId,true,true)
+        // props.loadComments(articleId)
     }
 
     render() {
         const {articles,users} = this.props
-        console.log(this.props)
 
         const currentArticleId: number = Number(this.props.match.params.id)
         const article: ArticleType = articles[currentArticleId]
@@ -51,6 +54,7 @@ class ArticlePage extends React.Component<ArticlePageProps> {
                 <Article
                     article={article}
                     creator={creator}
+                    users={this.props.users}
                 />}
             </div>
         )

@@ -24,4 +24,4 @@ export function ArticlePreviewList({loadArticle,articles,users}: ArticlePreviewL
                 ))}
         </div>
     )
-}
+}   
