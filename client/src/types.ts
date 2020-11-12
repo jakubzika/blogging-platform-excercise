@@ -23,6 +23,7 @@ export interface ArticleComment {
     creator: UserID
     content: string
     created: Date
+    article: ArticleID
 }
 
 export type ArticleID = number
@@ -37,4 +38,5 @@ export interface Article {
     created: Date
     edited?: Date
     votes: Votes
+    comments?: ArticleComment[]
 }

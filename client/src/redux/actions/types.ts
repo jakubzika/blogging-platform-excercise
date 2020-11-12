@@ -1,7 +1,7 @@
 import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
 import { AppState } from '../reducers'
-import { Article, User } from '../../types'
+import { Article, User, ArticleComment, ArticleID } from '../../types'
 
 export const TESTING_ACTION = 'TESTING_ACTION'
 
@@ -26,6 +26,14 @@ interface SetUsers {
     users: User[]
 }
 
-export type AppActionType = TestingAction | SetArticles | SetUsers
+export const SET_COMMENTS = 'SET_COMMENTS'
+
+interface SetComments {
+    type: typeof SET_COMMENTS
+    articleId: ArticleID
+    comments: ArticleComment[]
+}
+
+export type AppActionType = TestingAction | SetArticles | SetUsers | SetComments
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action<string>>

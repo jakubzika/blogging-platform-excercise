@@ -1,7 +1,17 @@
 import axios from 'axios'
-import { getArticleResponseDTO, listArticlesResponseDTO } from '../../../shared/dto/response-dto'
-import { mapFromArticlesDTO, mapFromArticleDTO, mapFromUserDTO } from './dto-mapper'
-import { Article, ArticleID, User } from '../types'
+import {
+    getArticleResponseDTO,
+    listArticlesResponseDTO,
+    getCommentsResponseDTO,
+} from '../../../shared/dto/response-dto'
+import {
+    mapFromArticlesDTO,
+    mapFromArticleDTO,
+    mapFromUserDTO,
+    mapFromCommentsDTO,
+    mapFromusersDTO,
+} from './dto-mapper'
+import { Article, ArticleID, User, ArticleComment } from '../types'
 import { boolToString } from './util'
 
 const API_URL = 'http://localhost:8080'
@@ -39,7 +49,23 @@ const getArticle = (
         })
 }
 
+const getComments = (id: ArticleID): Promise<{ comments: ArticleComment[]; users: User[] }> => {
+    return axios
+        .get<getCommentsResponseDTO>(`/article/${id.valueOf()}/comment/`, {
+            params: {
+                includeUsers: boolToString(true),
+            },
+        })
+        .then((response) => {
+            return {
+                comments: mapFromCommentsDTO(response.data.comments),
+                users: mapFromusersDTO(response.data.users),
+            }
+        })
+}
+
 export default {
     getArticles,
     getArticle,
+    getComments,
 }

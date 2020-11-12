@@ -1,7 +1,14 @@
-import { articleDTO, userDTO, listArticlesResponseDTO } from '../../../shared/dto/response-dto'
-import { Article, UserID, User } from '../types'
+import {
+    articleDTO,
+    userDTO,
+    listArticlesResponseDTO,
+    commentDTO,
+} from '../../../shared/dto/response-dto'
+import { Article, UserID, User, ArticleComment } from '../types'
 
 export const mapFromUserDTO = (user: userDTO): User => user
+
+export const mapFromusersDTO = (users: userDTO[]): User[] => users.map(mapFromUserDTO)
 
 export const mapFromArticleDTO = (article: articleDTO): Article => ({
     ...article,
@@ -18,3 +25,11 @@ export const mapFromArticlesDTO = (
         creators: data.creators !== null ? data.creators.map(mapFromUserDTO) : null,
     }
 }
+
+export const mapFromCommentDTO = (comment: commentDTO): ArticleComment => ({
+    ...comment,
+    created: new Date(comment.created),
+})
+
+export const mapFromCommentsDTO = (comments: commentDTO[]): ArticleComment[] =>
+    comments.map(mapFromCommentDTO)

@@ -1,9 +1,16 @@
-import { AppActionType, TESTING_ACTION, AppThunk, SET_ARTICLES, SET_USERS } from './types'
+import {
+    AppActionType,
+    TESTING_ACTION,
+    AppThunk,
+    SET_ARTICLES,
+    SET_USERS,
+    SET_COMMENTS,
+} from './types'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
 import { Action } from 'redux'
 import api from '../../lib/api'
-import { Article, ArticleID, User } from '../../types'
+import { Article, ArticleID, User, ArticleComment } from '../../types'
 import { useStore } from 'react-redux'
 
 export function testingAction(msg: string): AppActionType {
@@ -21,7 +28,6 @@ export function setArticles(articles: Article[]): AppActionType {
 }
 
 export function setUsers(users: User[]) {
-    console.log('set users')
     return {
         type: SET_USERS,
         users,
@@ -46,5 +52,22 @@ export function loadArticle(
         const { article, creator } = await api.getArticle(id, includeCreator, includeContent)
         dispatch(setArticles([article]))
         dispatch(setUsers([creator]))
+        dispatch(loadComments(id))
+    }
+}
+
+export function setComments(articleId: ArticleID, comments: ArticleComment[]): AppActionType {
+    return {
+        type: SET_COMMENTS,
+        articleId: articleId,
+        comments: comments,
+    }
+}
+
+export function loadComments(articleId: ArticleID): AppThunk {
+    return async (dispatch) => {
+        const response = await api.getComments(articleId)
+        dispatch(setComments(articleId, response.comments))
+        if (response.users) dispatch(setUsers(response.users))
     }
 }
