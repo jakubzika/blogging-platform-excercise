@@ -20,6 +20,7 @@ export type articleDTO = {
     creator: number
     created: string
     edited?: string
+    comments: commentDTO[]
     votes: number
 }
 
