@@ -8,6 +8,8 @@ import {AppState} from '../redux/reducers/index'
 
 import MainPage from './main'
 import ArticlePage from './article'
+import NavigationBar from './navigation-bar'
+import LoginPage from './login'
 
 
 export interface AppProps {
@@ -24,10 +26,11 @@ class App extends React.Component<AppProps> {
     render() {
         return(
             <div>
+                <NavigationBar/>
                 <Switch>
                     <Route path="/article/:id" component={ArticlePage}></Route>
                     <Route path="/profile" ></Route>
-                    <Route path="/login" ></Route>
+                    <Route path="/login" component={LoginPage}></Route>
                     <Route path="/" component={MainPage}></Route>
                 </Switch>
                 

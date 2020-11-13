@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .MainPage {
     width: 40em;
     margin-left: 20em;
@@ -9,4 +11,21 @@
     width: 40em;
     margin-left: 20em;
     margin-top: 6em;
+}
+
+.LoginPage {
+    width: 20em;
+    margin: auto;
+    margin-top: 6em;
+    padding: 40px;
+    padding-top: 0;
+    padding-bottom: 30px;
+    border: 1px solid lighten($base-color,20);
+    // box-shadow: 0 0 20px rgb(86, 86, 86);
+}
+
+.NavigationBar {
+    margin: 0;
+    padding: 10px;
+    background-color: $navigation-bar-background;
 }
