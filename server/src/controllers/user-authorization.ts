@@ -13,13 +13,15 @@ import {
     UserCreationObject,
     UserCreationError,
 } from '../services/user-manager'
+import { loginResponseDTO } from '../../../shared/dto/response-dto'
+import { mapUserDTO } from '../lib/dto-mapper'
 
 export interface JwtData {
     uid: number
     email: string
 }
 
-export class UserLoginController implements RouteHandler {
+export class UserAuthorizationController implements RouteHandler {
     jwtSecret: string
     constructor() {
         this.jwtSecret = Configuration.getJwtSecret()
@@ -36,8 +38,14 @@ export class UserLoginController implements RouteHandler {
     async auth(req: Request, res: Response, next: Next) {
         const login: LoginCredentials = req.body
 
+        console.log(login)
+
         const result = await UserManager.authenticate(login)
+
+        let response: loginResponseDTO
+
         if (result instanceof User) {
+            console.log('success')
             const data: JwtData = {
                 uid: result.id,
                 email: result.email,
@@ -46,16 +54,24 @@ export class UserLoginController implements RouteHandler {
             const token = jwt.sign(data, this.jwtSecret, {
                 expiresIn: '2h',
             })
-
-            res.send({ token })
+            response = {
+                successful: true,
+                token: token,
+                user: mapUserDTO(result, false),
+            }
+            res.send(response)
             next()
         } else {
             if (
                 result == UserAuthenticationError.NO_ACCOUNT_WITH_EMAIL ||
                 result == UserAuthenticationError.PASSWORDS_DONT_MATCH
-            )
-                next(new errors.InvalidCredentialsError('Invalid email or password'))
-            else {
+            ) {
+                response = {
+                    successful: false,
+                }
+                res.send(response)
+                next()
+            } else {
                 next(new errors.InternalError(''))
             }
         }
@@ -72,7 +88,7 @@ export class UserLoginController implements RouteHandler {
                 next()
             } else {
                 if (result == UserCreationError.USER_ALREADY_EXISTS) {
-                    next(new errors.InvalidCredentialsError('Email already registered'))
+                    next(new errors.UnauthorizedError('Email already registered'))
                 }
             }
         } catch {

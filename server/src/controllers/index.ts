@@ -1,9 +1,9 @@
 import { ArticleController } from './article'
-import { UserLoginController } from './userLogin'
+import { UserAuthorizationController } from './user-authorization'
 import { CommentController } from './comment'
 
 export const controllers = [
     new ArticleController(),
-    new UserLoginController(),
+    new UserAuthorizationController(),
     new CommentController(),
 ]

@@ -6,7 +6,7 @@ import { Router } from '../router'
 
 import { User } from '../entity/user'
 import { Article } from '../entity/article'
-import { JwtData } from './userLogin'
+import { JwtData } from './user-authorization'
 import {
     getArticlesDTO,
     getArticleDTO,
