@@ -39,6 +39,12 @@ export type getCommentsResponseDTO = {
     users?: userDTO[]
 }
 
+export type loginResponseDTO = {
+    successful: boolean
+    token?: string
+    user?: userDTO
+}
+
 export type responseDTO = {
     response: getArticleResponseDTO | listArticlesResponseDTO // TODO: many more
 }

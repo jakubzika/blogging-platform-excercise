@@ -40,3 +40,10 @@ export interface Article {
     votes: Votes
     comments?: ArticleComment[]
 }
+
+export enum LoadingState {
+    IDLE = 'IDLE',
+    LOADING = 'LOADING',
+    SUCCESS = 'SUCCESS',
+    FAILURE = 'FAILURE',
+}
