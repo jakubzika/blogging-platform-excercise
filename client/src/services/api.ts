@@ -11,9 +11,9 @@ import {
     mapFromUserDTO,
     mapFromCommentsDTO,
     mapFromusersDTO,
-} from './dto-mapper'
+} from '../lib/dto-mapper'
 import { Article, ArticleID, User, ArticleComment, UserID } from '../types'
-import { boolToString } from './util'
+import { boolToString } from '../lib/util'
 
 const API_URL = 'http://localhost:8080'
 
