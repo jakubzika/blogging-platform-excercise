@@ -1,6 +1,6 @@
 import { AppActionType, SET_LOGIN_LOADING_STATE, AppThunk, USER_LOGIN } from './types'
 import { LoadingState, UserID } from '../../types'
-import api from '../../lib/api'
+import api from '../../services/api'
 import { setUsers } from './app'
 
 export function setLoginLoadingState(loadingState: LoadingState): AppActionType {

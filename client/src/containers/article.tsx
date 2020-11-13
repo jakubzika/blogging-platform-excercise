@@ -9,7 +9,7 @@ import { Title } from '../components/title'
 
 import style from '../assets/styles/containers.scss'
 import { match } from 'react-router-dom'
-import api from '../lib/api'
+import api from '../services/api'
 
 const mapStateToProps = (state: AppState) => ({
     articles: state.app.articles,

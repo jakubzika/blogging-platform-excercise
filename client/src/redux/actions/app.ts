@@ -9,7 +9,7 @@ import {
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
 import { Action } from 'redux'
-import api from '../../lib/api'
+import api from '../../services/api'
 import { Article, ArticleID, User, ArticleComment } from '../../types'
 import { useStore } from 'react-redux'
 
