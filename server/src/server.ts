@@ -35,7 +35,7 @@ export class Server {
         const cors = corsMiddleware({
             preflightMaxAge: 5, //Optional
             origins: ['*'],
-            allowHeaders: ['API-Token'],
+            allowHeaders: ['API-Token', 'Authorization'],
             exposeHeaders: ['API-Token-Expiry'],
         })
 
