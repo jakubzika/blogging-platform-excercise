@@ -16,6 +16,8 @@ import {
     mapFromCommentDTO,
 } from '../lib/dto-mapper'
 import { Article, ArticleID, User, ArticleComment, UserID } from '../types'
+import { getArticlesDTO } from '../../../shared/dto/request-dto'
+
 import { boolToString } from '../lib/util'
 
 const API_URL = 'http://localhost:8080'
@@ -50,10 +52,18 @@ class ApiService {
         this.token = token
     }
 
-    getArticles(): Promise<{ articles: Article[]; creators: User[] }> {
+    getArticles(options?: {
+        includeCreator?: boolean
+        fromUser?: UserID
+    }): Promise<{ articles: Article[]; creators: User[] }> {
+        const request: getArticlesDTO = {
+            includeCreator: options && options.includeCreator && boolToString(true),
+            fromUser: options && options.fromUser,
+        }
+
         return this.api
             .get<listArticlesResponseDTO>(`/article/`, {
-                params: { includeCreator: boolToString(true) },
+                params: request,
             })
             .then((response): { articles: Article[]; creators: User[] } => {
                 return mapFromArticlesDTO(response.data)

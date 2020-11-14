@@ -23,7 +23,7 @@ export const mapFromArticlesDTO = (
 ): { articles: Article[]; creators: User[] } => {
     return {
         articles: data.articles.map(mapFromArticleDTO),
-        creators: data.creators !== null ? data.creators.map(mapFromUserDTO) : null,
+        creators: data.creators ? data.creators.map(mapFromUserDTO) : null,
     }
 }
 

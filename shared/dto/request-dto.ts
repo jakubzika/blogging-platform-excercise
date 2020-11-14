@@ -14,6 +14,7 @@ export type getArticlesDTO = {
     skip?: number
     take?: number
     includeCreator?: string
+    fromUser?: number
 }
 
 export type getArticleDTO = {

@@ -14,7 +14,7 @@ const mapStateToProps = (state: AppState) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    loadArticles: () => dispatch(loadArticles()),
+    loadArticles: (options) => dispatch(loadArticles(options)),
     loadArticle: (id, content, creator) => dispatch(loadArticle(id, content, creator)),
 })
 
@@ -27,7 +27,7 @@ type MainPageProps = connectorProps & {}
 class MainPage extends React.Component<MainPageProps> {
     constructor(props: MainPageProps) {
         super(props)
-        props.loadArticles()
+        props.loadArticles({ includeCreator: true })
     }
 
     render() {

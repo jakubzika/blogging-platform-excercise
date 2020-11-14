@@ -11,7 +11,7 @@ import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
 import { Action } from 'redux'
 import api from '../../services/api'
-import { Article, ArticleID, User, ArticleComment, LoadingState } from '../../types'
+import { Article, ArticleID, User, ArticleComment, LoadingState, UserID } from '../../types'
 import { useStore } from 'react-redux'
 import { setLoadingState } from './ui'
 
@@ -36,11 +36,10 @@ export function setUsers(users: User[]) {
     }
 }
 
-export function loadArticles(): AppThunk {
+export function loadArticles(options?: { includeCreator?: boolean; fromUser?: UserID }): AppThunk {
     return async (dispatch) => {
-        const response = await api.getArticles()
+        const response = await api.getArticles(options)
         dispatch(setArticles(response.articles))
-        console.log('creators', response.creators)
         if (response.creators) dispatch(setUsers(response.creators))
     }
 }

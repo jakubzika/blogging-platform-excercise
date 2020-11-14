@@ -50,6 +50,11 @@ export class ArticleController implements RouteHandler {
         // TODO: Check query validity
         const queryParams: getArticlesDTO = req.query
 
+        const where: any = {}
+        if (queryParams.fromUser) {
+            where.creator = queryParams.fromUser
+        }
+
         let articles: Article[] = []
         let creators: User[] = []
 
@@ -58,6 +63,7 @@ export class ArticleController implements RouteHandler {
             let result = await this.articleRepository.getArticlesWithCreators({
                 skip: queryParams.skip,
                 take: queryParams.take,
+                where,
             })
             articles = result.articles
             creators = result.users
@@ -67,6 +73,7 @@ export class ArticleController implements RouteHandler {
             articles = await this.articleRepository.getArticles({
                 skip: queryParams.skip,
                 take: queryParams.take,
+                where,
             })
 
             response = mapArticlesDTO(articles)

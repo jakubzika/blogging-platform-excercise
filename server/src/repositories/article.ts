@@ -12,8 +12,16 @@ export class ArticleRepository extends Repository<Article> {
 
     // derive
 
-    public async getArticles(options?: { skip?: number; take?: number }): Promise<Article[]> {
+    public async getArticles(options?: {
+        skip?: number
+        take?: number
+        where?: string[]
+    }): Promise<Article[]> {
         let dbQuery: any = {}
+
+        if (options && options.where) {
+            dbQuery.where = options.where
+        }
 
         if (options.skip && options.take) {
             dbQuery.skip = options.skip
@@ -28,9 +36,14 @@ export class ArticleRepository extends Repository<Article> {
     public async getArticlesWithCreators(options: {
         skip?: number
         take?: number
+        where?: string[]
     }): Promise<{ articles: Article[]; users: User[] }> {
         let dbQuery: any = {
             relations: ['creator'],
+        }
+
+        if (options && options.where) {
+            dbQuery.where = options.where
         }
 
         if (options.skip && options.take) {
