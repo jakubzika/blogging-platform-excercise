@@ -11,10 +11,14 @@ export interface CommentsListProps {
 }
 
 export function CommentsList({ comments, users }: CommentsListProps) {
+    const sortedComments: ArticleComment[] = comments.sort(
+        (a: any, b: any) => b.created - a.created
+    )
+
     return (
         <div>
             {comments &&
-                comments.map((comment) => (
+                sortedComments.map((comment) => (
                     <Comment comment={comment} user={users[comment.creator]} key={comment.id} />
                 ))}
         </div>
