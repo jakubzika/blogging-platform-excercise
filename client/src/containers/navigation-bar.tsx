@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AppState } from '../redux/reducers'
 import { getLoggedInUser } from '../selectors'
 
 import style from '../assets/styles/containers.scss'
-
 
 const mapStateToProps = (state: AppState) => ({
     loggedInUser: getLoggedInUser(state),
@@ -15,7 +14,7 @@ const mapDispatchToProps = (dispatch) => ({
     // loginUser: () => dispatch(login)
 })
 
-const connector = connect(mapStateToProps,mapDispatchToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type connectorProps = ConnectedProps<typeof connector>
 
@@ -31,9 +30,11 @@ class NavigationBar extends React.Component<NavigationBarProps> {
     render() {
         return (
             <div className={style.NavigationBar}>
-                {this.props.loggedInUser ? 'logged in' : 'not logged in'}
+                {this.props.loggedInUser
+                    ? `logged in as ${this.props.loggedInUser.name}`
+                    : 'not logged in'}
                 <div>
-                    <Link to='/login'>Log in →</Link>
+                    <Link to="/login">Log in →</Link>
                 </div>
             </div>
         )

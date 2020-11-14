@@ -7,7 +7,7 @@ export interface ButtonProps {
     onClick: () => any
 }
 
-export function Button({children, onClick}: ButtonProps) {
+export function Button({ children, onClick }: ButtonProps) {
     return (
         <button className={style.Button} onClick={onClick}>
             {children}

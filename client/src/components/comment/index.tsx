@@ -11,13 +11,14 @@ export interface CommentProps {
 }
 
 export function Comment({ comment, user }: CommentProps) {
-    console.log(user)
     return (
         <div className={style.Comment}>
             <div className={style.CommentHead}>
                 <span className={style.Name}>{user && user.name}</span>
-                
-                <span className={style.Created}>{comment && moment(comment.created).fromNow()}</span>
+
+                <span className={style.Created}>
+                    {comment && moment(comment.created).fromNow()}
+                </span>
             </div>
             <p className={style.Content}>{comment && comment.content}</p>
         </div>

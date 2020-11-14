@@ -5,10 +5,6 @@ export interface TitleProps {
     children: ReactChild | ReactChild[]
 }
 
-export function Title({children}: TitleProps) {
-    return (
-        <h1 className={style.Title}>
-            {children}
-        </h1>
-    )
+export function Title({ children }: TitleProps) {
+    return <h1 className={style.Title}>{children}</h1>
 }

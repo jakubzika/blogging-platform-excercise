@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect, ConnectedProps} from 'react-redux'
+import { connect, ConnectedProps } from 'react-redux'
 import { Article as ArticleType, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
 import { loadArticles, loadArticle, loadComments } from '../redux/actions/app'
@@ -13,36 +13,34 @@ import api from '../services/api'
 
 const mapStateToProps = (state: AppState) => ({
     articles: state.app.articles,
-    users: state.app.users
+    users: state.app.users,
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
     loadArticles: () => dispatch(loadArticles()),
-    loadArticle: (id, content, creator) => dispatch(loadArticle(id,content,creator)),
-    loadComments: (articleId) => dispatch(loadComments(articleId))
-
+    loadArticle: (id, content, creator) => dispatch(loadArticle(id, content, creator)),
+    loadComments: (articleId) => dispatch(loadComments(articleId)),
 })
 
-const connector = connect(mapStateToProps,mapDispatchToProps)
+const connector = connect(mapStateToProps, mapDispatchToProps)
 
 type connectorProps = ConnectedProps<typeof connector>
 
-type  ArticlePageProps = connectorProps &  {
+type ArticlePageProps = connectorProps & {
     match: any
 }
-
 
 class ArticlePage extends React.Component<ArticlePageProps> {
     constructor(props: ArticlePageProps) {
         super(props)
         const articleId = props.match.params.id
-        // if(!props.articles[articleId] || !props.articles[articleId].loaded) 
-        props.loadArticle(articleId,true,true)
+        // if(!props.articles[articleId] || !props.articles[articleId].loaded)
+        props.loadArticle(articleId, true, true)
         // props.loadComments(articleId)
     }
 
     render() {
-        const {articles,users} = this.props
+        const { articles, users } = this.props
 
         const currentArticleId: number = Number(this.props.match.params.id)
         const article: ArticleType = articles[currentArticleId]
@@ -51,12 +49,9 @@ class ArticlePage extends React.Component<ArticlePageProps> {
         return (
             <div className={style.ArticlePage}>
                 {/* <Title>Article {this.props.match.params.id}</Title> */}
-                {article && 
-                <Article
-                    article={article}
-                    creator={creator}
-                    users={this.props.users}
-                />}
+                {article && (
+                    <Article article={article} creator={creator} users={this.props.users} />
+                )}
             </div>
         )
     }
