@@ -4,6 +4,7 @@ import {
     listArticlesResponseDTO,
     getCommentsResponseDTO,
     loginResponseDTO,
+    authorizedUserdResponseDTO,
 } from '../../../shared/dto/response-dto'
 import {
     mapFromArticlesDTO,
@@ -111,6 +112,17 @@ class ApiService {
                 } else {
                     return null
                 }
+            })
+    }
+
+    isAuthorized(): Promise<User | null> {
+        return this.api
+            .get<authorizedUserdResponseDTO>('/user/authorized')
+            .then((response) => {
+                return mapFromUserDTO(response.data.user)
+            })
+            .catch((err) => {
+                return null
             })
     }
 }

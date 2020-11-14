@@ -1,4 +1,4 @@
-import {connect} from 'react-redux'
+import {connect, ConnectedProps} from 'react-redux'
 import React from 'react'
 import {Route, Switch} from 'react-router'
 
@@ -10,17 +10,35 @@ import MainPage from './main'
 import ArticlePage from './article'
 import NavigationBar from './navigation-bar'
 import LoginPage from './login'
+import { restoreUser } from '../redux/actions/auth'
 
 
-export interface AppProps {
+
+const mapStateToProps = (state:AppState) => ({
+    message: state.app.message
+})
+
+
+const mapDispatchToProps = dispatch => ({
+    introduction: (arg: string) => {
+        dispatch(testingAction(arg))
+    },
+    restoreUser: () => dispatch(restoreUser())
+})
+
+const connector = connect(mapStateToProps,mapDispatchToProps)
+
+type connectorProps = ConnectedProps<typeof connector>
+
+type AppProps = connectorProps & {
     message: String,
     introduction: (arg:string) => void
 }
 
 class App extends React.Component<AppProps> {
     constructor(props: AppProps) {
-        console.log(props)
-        super(props)
+        super(props)        
+        props.restoreUser()
     }
 
     render() {
@@ -39,15 +57,6 @@ class App extends React.Component<AppProps> {
     }
 }
 
-const mapStateToProps = (state:AppState) => ({
-        message: state.app.message
-    })
 
 
-const mapDispatchToProps = dispatch => ({
-    introduction: (arg: string) => {
-        dispatch(testingAction(arg))
-    }
-})
-
-export default connect(mapStateToProps,mapDispatchToProps)(App);
+export default connector(App);
