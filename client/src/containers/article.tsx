@@ -34,9 +34,7 @@ class ArticlePage extends React.Component<ArticlePageProps> {
     constructor(props: ArticlePageProps) {
         super(props)
         const articleId = props.match.params.id
-        // if(!props.articles[articleId] || !props.articles[articleId].loaded)
         props.loadArticle(articleId, true, true)
-        // props.loadComments(articleId)
     }
 
     render() {
