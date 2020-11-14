@@ -7,14 +7,16 @@ import { Title } from '../title'
 import style from './style.scss'
 import { CommentsList } from '../comments-list'
 import { Comments } from '../comments'
+import { addComment } from '../../redux/actions/app'
 
 export interface ArticleProps {
     article: Article
     creator: User
     users: UsersObject
+    addComment: (content: string) => any
 }
 
-export function Article({ article, creator, users }: ArticleProps) {
+export function Article({ article, creator, users, addComment }: ArticleProps) {
     return (
         <div>
             <Title>{article.title}</Title>
@@ -26,7 +28,9 @@ export function Article({ article, creator, users }: ArticleProps) {
             <p className={style.Content}>{article.content}</p>
             <hr className={style.Separator} />
             <h2>Comments {article.comments && ` (${article.comments.length})`}</h2>
-            {article.comments && <Comments comments={article.comments} users={users} />}
+            {article.comments && (
+                <Comments comments={article.comments} users={users} addComment={addComment} />
+            )}
         </div>
     )
 }

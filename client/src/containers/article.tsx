@@ -2,7 +2,13 @@ import React from 'react'
 import { connect, ConnectedProps } from 'react-redux'
 import { Article as ArticleType, User, ArticleID } from '../types'
 import { AppState } from '../redux/reducers'
-import { loadArticles, loadArticle, loadComments } from '../redux/actions/app'
+import {
+    loadArticles,
+    loadArticle,
+    loadComments,
+    addComment,
+    createComment,
+} from '../redux/actions/app'
 
 import { Article } from '../components/article'
 import { Title } from '../components/title'
@@ -20,6 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
     loadArticles: () => dispatch(loadArticles()),
     loadArticle: (id, content, creator) => dispatch(loadArticle(id, content, creator)),
     loadComments: (articleId) => dispatch(loadComments(articleId)),
+    createComment: (content, articleId) => dispatch(createComment(content, articleId)),
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -48,7 +55,14 @@ class ArticlePage extends React.Component<ArticlePageProps> {
             <div className={style.ArticlePage}>
                 {/* <Title>Article {this.props.match.params.id}</Title> */}
                 {article && (
-                    <Article article={article} creator={creator} users={this.props.users} />
+                    <Article
+                        article={article}
+                        creator={creator}
+                        users={this.props.users}
+                        addComment={(content) =>
+                            this.props.createComment(content, currentArticleId)
+                        }
+                    />
                 )}
             </div>
         )

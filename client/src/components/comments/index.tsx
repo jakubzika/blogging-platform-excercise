@@ -11,9 +11,10 @@ import style from './style.scss'
 export type CommentsProps = AuthorizedUserConnectorProps & {
     comments: ArticleComment[]
     users: UsersObject
+    addComment: (content: string) => any
 }
 
-export function comments({ comments, users, loggedInUser }: CommentsProps) {
+export function comments({ comments, users, loggedInUser, addComment }: CommentsProps) {
     const [comment, setComment] = useState('')
 
     const submit = () => {
@@ -22,7 +23,7 @@ export function comments({ comments, users, loggedInUser }: CommentsProps) {
 
     const onEnter = (evt: React.KeyboardEvent) => {
         if (evt.key === 'Enter' && comment !== '') {
-            console.log('submit comment ', comment)
+            addComment(comment)
             setComment('')
         }
     }
@@ -36,7 +37,6 @@ export function comments({ comments, users, loggedInUser }: CommentsProps) {
                         onKeyDown={onEnter}
                         onChange={(evt) => setComment(evt.target.value)}
                         placeholder={'Join the discussion'}
-                        onSubmit={submit}
                     />
                 </div>
             )}
