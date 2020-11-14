@@ -9,7 +9,7 @@ import { Article } from '../entity/article'
 import { Comment } from '../entity/comment'
 import { User } from '../entity/user'
 import { FindManyOptions } from 'typeorm'
-import { mapGetCommentsDTO } from '../lib/dto-mapper'
+import { mapGetCommentsDTO, mapCommentDTO } from '../lib/dto-mapper'
 import { queryParamToBool } from '../lib/util'
 
 export class CommentController implements RouteHandler {
@@ -74,10 +74,7 @@ export class CommentController implements RouteHandler {
         comment = await Comment.save(comment)
 
         res.send({
-            id: comment.id,
-            article: comment.article.id,
-            content: comment.content,
-            created: comment.created,
+            comment: mapCommentDTO(comment),
         })
         next()
     }

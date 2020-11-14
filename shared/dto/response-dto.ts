@@ -52,3 +52,7 @@ export type authorizedUserdResponseDTO = {
 export type responseDTO = {
     response: getArticleResponseDTO | listArticlesResponseDTO // TODO: many more
 }
+
+export type createCommentResponseDTO = {
+    comment: commentDTO
+}
