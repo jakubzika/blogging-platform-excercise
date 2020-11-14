@@ -2,6 +2,7 @@ import { ThunkAction } from 'redux-thunk'
 import { Action } from 'redux'
 import { AppState } from '../reducers'
 import { Article, User, ArticleComment, ArticleID, UserID, LoadingState } from '../../types'
+import { UIState } from '../reducers/ui'
 
 export const TESTING_ACTION = 'TESTING_ACTION'
 
@@ -34,6 +35,14 @@ interface SetComments {
     comments: ArticleComment[]
 }
 
+export const ADD_COMMENT = 'ADD_COMMENT'
+
+interface AddComment {
+    type: typeof ADD_COMMENT
+    comment: Comment
+    articleId: ArticleID
+}
+
 export const USER_LOGIN = 'USER_LOGIN'
 
 interface UserLogin {
@@ -55,6 +64,13 @@ interface SetLoginLoadingState {
     loadingState: LoadingState
 }
 
+export const SET_LOADING_STATE = 'SET_LOADING_STATE'
+interface SetLoadingState {
+    type: typeof SET_LOADING_STATE
+    kind: keyof UIState
+    loadingState: LoadingState
+}
+
 export type AppActionType =
     | TestingAction
     | SetArticles
@@ -63,5 +79,6 @@ export type AppActionType =
     | UserLogin
     | UserLogout
     | SetLoginLoadingState
+    | SetLoadingState
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action<string>>

@@ -10,14 +10,12 @@ export interface AuthorizationState {
     state: loginStateEnum
     userId: null | UserID
     token: string
-    loadingState: LoadingState
 }
 
 const initialAuthState: AuthorizationState = {
     state: loginStateEnum.LOGGED_OUT,
     userId: null,
     token: null,
-    loadingState: LoadingState.IDLE,
 }
 
 export default function authReducer(
@@ -38,11 +36,6 @@ export default function authReducer(
                 state: loginStateEnum.LOGGED_OUT,
                 token: null,
                 userId: null,
-            }
-        case SET_LOGIN_LOADING_STATE:
-            return {
-                ...state,
-                loadingState: action.loadingState,
             }
         default:
             return state

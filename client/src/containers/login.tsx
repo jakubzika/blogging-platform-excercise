@@ -11,7 +11,7 @@ import { Redirect } from 'react-router-dom'
 
 const mapStateToProps = (state: AppState) => ({
     loggedInUser: getLoggedInUser(state),
-    loginLoadingState: state.auth.loadingState,
+    loginLoadingState: state.ui.loginLoading,
 })
 
 const mapDispatchToProps = (dispatch) => ({

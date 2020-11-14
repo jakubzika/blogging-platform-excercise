@@ -3,6 +3,7 @@ import { LoadingState, UserID, User } from '../../types'
 import api from '../../services/api'
 import { setUsers } from './app'
 import localStoreService from '../../services/local-store'
+import { setLoadingState } from './ui'
 
 export function setLoginLoadingState(loadingState: LoadingState): AppActionType {
     return {
@@ -21,14 +22,14 @@ export function userLogin(userId: UserID, token: string): AppActionType {
 
 export function login(email: string, password: string): AppThunk {
     return async (dispatch) => {
-        dispatch(setLoginLoadingState(LoadingState.LOADING))
+        dispatch(setLoadingState(LoadingState.LOADING, 'loginLoading'))
         const response = await api.login(email, password)
         if (response === null) {
-            dispatch(setLoginLoadingState(LoadingState.FAILURE))
+            dispatch(setLoadingState(LoadingState.FAILURE, 'loginLoading'))
         } else {
             dispatch(setUsers([response.user]))
             dispatch(userLogin(response.userId, response.token))
-            dispatch(setLoginLoadingState(LoadingState.IDLE))
+            dispatch(setLoadingState(LoadingState.IDLE, 'loginLoading'))
             localStoreService.setToken(response.token)
         }
     }
