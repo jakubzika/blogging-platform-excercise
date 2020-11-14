@@ -47,3 +47,5 @@ export enum LoadingState {
     SUCCESS = 'SUCCESS',
     FAILURE = 'FAILURE',
 }
+
+export type UsersObject = { [key: number]: User }

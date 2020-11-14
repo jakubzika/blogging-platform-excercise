@@ -1,5 +1,5 @@
 import React from 'react'
-import { Article, User } from '../../types'
+import { Article, User, UsersObject } from '../../types'
 import { ArticlePreview } from '../article-preview'
 import { loadArticle } from '../../redux/actions/app'
 
@@ -7,7 +7,7 @@ import style from './style.scss'
 
 export interface ArticlePreviewListProps {
     articles: Article[],
-    users: {[key: number]: User}
+    users: UsersObject
     loadArticle: typeof loadArticle
 }
 

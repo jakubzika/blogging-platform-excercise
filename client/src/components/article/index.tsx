@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 
-import { Article, User } from "../../types"
+import { Article, User, UsersObject } from "../../types"
 import { Title } from '../title'
 
 import style from './style.scss'
@@ -10,7 +10,7 @@ import { CommentsList } from '../comments-list'
 export interface ArticleProps {
     article: Article
     creator: User
-    users: {[key: number]: User}
+    users: UsersObject
 }
 
 export function Article({article,creator,users}: ArticleProps) {
