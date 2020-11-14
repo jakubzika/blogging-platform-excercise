@@ -45,6 +45,10 @@ export type loginResponseDTO = {
     user?: userDTO
 }
 
+export type authorizedUserdResponseDTO = {
+    user: userDTO
+}
+
 export type responseDTO = {
     response: getArticleResponseDTO | listArticlesResponseDTO // TODO: many more
 }

@@ -33,12 +33,12 @@ export class UserAuthorizationController implements RouteHandler {
 
         router.post('/login', this.auth.bind(this))
         router.post('/', this.create.bind(this))
+
+        router.get('/authorized', this.isAuthorized.bind(this), { authentication: true })
     }
 
     async auth(req: Request, res: Response, next: Next) {
         const login: LoginCredentials = req.body
-
-        console.log(login)
 
         const result = await UserManager.authenticate(login)
 
@@ -94,5 +94,12 @@ export class UserAuthorizationController implements RouteHandler {
         } catch {
             next(new errors.InternalServerError(''))
         }
+    }
+
+    async isAuthorized(req: Request, res: Response, next: Next) {
+        const userJwt = req['user']
+        const user = await User.findOne(userJwt.uid)
+        res.send({ user: mapUserDTO(user) })
+        next()
     }
 }
