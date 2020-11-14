@@ -5,6 +5,7 @@ import {
     getCommentsResponseDTO,
     loginResponseDTO,
     authorizedUserdResponseDTO,
+    createCommentResponseDTO,
 } from '../../../shared/dto/response-dto'
 import {
     mapFromArticlesDTO,
@@ -12,6 +13,7 @@ import {
     mapFromUserDTO,
     mapFromCommentsDTO,
     mapFromusersDTO,
+    mapFromCommentDTO,
 } from '../lib/dto-mapper'
 import { Article, ArticleID, User, ArticleComment, UserID } from '../types'
 import { boolToString } from '../lib/util'
@@ -79,9 +81,9 @@ class ApiService {
             })
     }
 
-    getComments(id: ArticleID): Promise<{ comments: ArticleComment[]; users: User[] }> {
+    getComments(articleId: ArticleID): Promise<{ comments: ArticleComment[]; users: User[] }> {
         return this.api
-            .get<getCommentsResponseDTO>(`/article/${id.valueOf()}/comment/`, {
+            .get<getCommentsResponseDTO>(`/article/${articleId.valueOf()}/comment/`, {
                 params: {
                     includeUsers: boolToString(true),
                 },
@@ -91,6 +93,20 @@ class ApiService {
                     comments: mapFromCommentsDTO(response.data.comments),
                     users: mapFromusersDTO(response.data.users),
                 }
+            })
+    }
+
+    addComment(content: string, articleId: ArticleID): Promise<ArticleComment | null> {
+        return this.api
+            .post<createCommentResponseDTO>(`/article/${articleId.valueOf()}/comment/`, { content })
+            .then((response) => {
+                console.log('add comment success')
+                console.log(response.data)
+                return mapFromCommentDTO(response.data.comment)
+            })
+            .catch((err) => {
+                console.log('add comment failure', err)
+                return null
             })
     }
 

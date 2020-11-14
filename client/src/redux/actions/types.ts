@@ -39,7 +39,7 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 
 interface AddComment {
     type: typeof ADD_COMMENT
-    comment: Comment
+    comment: ArticleComment
     articleId: ArticleID
 }
 
@@ -80,5 +80,6 @@ export type AppActionType =
     | UserLogout
     | SetLoginLoadingState
     | SetLoadingState
+    | AddComment
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action<string>>

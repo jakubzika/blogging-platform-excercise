@@ -5,6 +5,7 @@ import {
     SET_ARTICLES,
     SET_USERS,
     SET_COMMENTS,
+    ADD_COMMENT,
 } from '../actions/types'
 
 export interface State {
@@ -59,6 +60,17 @@ export default function appReducer(state: State = initialState, action: AppActio
                     [action.articleId]: {
                         ...state.articles[action.articleId],
                         comments: action.comments,
+                    },
+                },
+            }
+        case ADD_COMMENT:
+            return {
+                ...state,
+                articles: {
+                    ...state.articles,
+                    [action.articleId]: {
+                        ...state.articles[action.articleId],
+                        comments: [action.comment, ...state.articles[action.articleId].comments],
                     },
                 },
             }

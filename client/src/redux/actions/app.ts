@@ -5,13 +5,15 @@ import {
     SET_ARTICLES,
     SET_USERS,
     SET_COMMENTS,
+    ADD_COMMENT,
 } from './types'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
 import { Action } from 'redux'
 import api from '../../services/api'
-import { Article, ArticleID, User, ArticleComment } from '../../types'
+import { Article, ArticleID, User, ArticleComment, LoadingState } from '../../types'
 import { useStore } from 'react-redux'
+import { setLoadingState } from './ui'
 
 export function testingAction(msg: string): AppActionType {
     return {
@@ -69,5 +71,27 @@ export function loadComments(articleId: ArticleID): AppThunk {
         const response = await api.getComments(articleId)
         dispatch(setComments(articleId, response.comments))
         if (response.users) dispatch(setUsers(response.users))
+    }
+}
+
+export function addComment(comment: ArticleComment, articleId: ArticleID): AppActionType {
+    return {
+        type: ADD_COMMENT,
+        comment,
+        articleId,
+    }
+}
+export function createComment(content: string, articleId: ArticleID): AppThunk {
+    return async (dispatch) => {
+        dispatch(setLoadingState(LoadingState.LOADING, 'newCommentLoading'))
+        const comment = await api.addComment(content, articleId)
+        console.log(comment)
+        console.log('creating comment')
+        if (comment !== null) {
+            dispatch(addComment(comment, articleId))
+            dispatch(setLoadingState(LoadingState.SUCCESS, 'newCommentLoading'))
+        } else {
+            dispatch(setLoadingState(LoadingState.FAILURE, 'newCommentLoading'))
+        }
     }
 }
