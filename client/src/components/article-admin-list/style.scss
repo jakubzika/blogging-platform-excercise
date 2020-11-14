@@ -1,0 +1,49 @@
+
+.ArticleAdminList {
+    span {
+        display: inline-block;
+        margin-right: 30px;
+        // margin-left: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        // background-color: rgb(209, 209, 209);
+    }
+
+    .Item {
+        // width: 70em;
+        height: 3em;
+    
+        
+    }
+    .Title {
+        overflow: hidden;
+        width: 18em;
+    }
+    
+    .Perex {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 30em;
+    }
+    
+    .Created {
+        width: 10em;
+    }
+    
+    .Edit {
+        width: 1em;
+    }
+    
+    .Delete {
+        width: 1em;
+        text-overflow: initial;
+    }
+    
+    .TableLabels {
+        font-weight: bold;
+        margin-bottom: 1.2em;
+    }
+
+}

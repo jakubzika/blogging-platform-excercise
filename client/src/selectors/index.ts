@@ -17,3 +17,14 @@ export const getLoggedInUser = createSelector(
         }
     }
 )
+
+const getArticles = (state: AppState): StoreObject<Article> => state.app.articles
+
+export const getUsersArticles = createSelector(
+    [getArticles, getLoggedInUser],
+    (articles, user): Article[] => {
+        if (user === null) return []
+
+        return Object.values(articles).filter((a) => a.creator === user.id)
+    }
+)
