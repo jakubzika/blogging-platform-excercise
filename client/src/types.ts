@@ -48,4 +48,6 @@ export enum LoadingState {
     FAILURE = 'FAILURE',
 }
 
-export type UsersObject = { [key: number]: User }
+export type UsersObject = StoreObject<User>
+
+export type StoreObject<T> = { [key: number]: T }
