@@ -8,6 +8,7 @@ export interface UIState {
     articlesLoading: LoadingState
     articleEdit: LoadingState
     articleCreate: LoadingState
+    articleDelete: LoadingState
 }
 
 const initialUIState: UIState = {
@@ -17,6 +18,7 @@ const initialUIState: UIState = {
     articlesLoading: LoadingState.IDLE,
     articleEdit: LoadingState.IDLE,
     articleCreate: LoadingState.IDLE,
+    articleDelete: LoadingState.IDLE,
 }
 
 export default function uiReducer(state: UIState = initialUIState, action: AppActionType): UIState {

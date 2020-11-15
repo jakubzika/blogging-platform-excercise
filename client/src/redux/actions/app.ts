@@ -6,6 +6,7 @@ import {
     SET_USERS,
     SET_COMMENTS,
     ADD_COMMENT,
+    REMOVE_ARTICLES,
 } from './types'
 import { ThunkAction } from 'redux-thunk'
 import { AppState } from '../reducers'
@@ -29,6 +30,13 @@ export function setArticles(articles: Article[]): AppActionType {
     }
 }
 
+export function removeArticles(articles: ArticleID[]): AppActionType {
+    return {
+        type: REMOVE_ARTICLES,
+        articles,
+    }
+}
+
 export function setUsers(users: User[]) {
     return {
         type: SET_USERS,
@@ -43,6 +51,8 @@ export function loadArticles(options?: { includeCreator?: boolean; fromUser?: Us
         if (response.creators) dispatch(setUsers(response.creators))
     }
 }
+
+// TOOD: DRY
 
 export function loadArticle(
     id: ArticleID,
@@ -79,6 +89,16 @@ export function editArticle(
         if (!article) dispatch(setLoadingState(LoadingState.FAILURE, 'articleEdit'))
         dispatch(setArticles([article]))
         dispatch(setLoadingState(LoadingState.SUCCESS, 'articleEdit'))
+    }
+}
+
+export function deleteArticle(articleId: ArticleID): AppThunk {
+    return async (dispatch) => {
+        dispatch(setLoadingState(LoadingState.LOADING, 'articleDelete'))
+        const article = await api.deleteArticle(articleId)
+        if (!article) dispatch(setLoadingState(LoadingState.FAILURE, 'articleDelete'))
+        dispatch(removeArticles([articleId]))
+        dispatch(setLoadingState(LoadingState.SUCCESS, 'articleDelete'))
     }
 }
 

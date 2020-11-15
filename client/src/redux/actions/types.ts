@@ -19,6 +19,12 @@ interface SetArticles {
     articles: Article[]
 }
 
+export const REMOVE_ARTICLES = 'REMOVE_ARTICLES'
+interface RemoveArticles {
+    type: typeof REMOVE_ARTICLES
+    articles: ArticleID[]
+}
+
 export const SET_USERS = 'SET_USERS'
 
 // TODO: look at what parameters are needed
@@ -81,5 +87,6 @@ export type AppActionType =
     | SetLoginLoadingState
     | SetLoadingState
     | AddComment
+    | RemoveArticles
 
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action<string>>

@@ -6,7 +6,9 @@ import {
     SET_USERS,
     SET_COMMENTS,
     ADD_COMMENT,
+    REMOVE_ARTICLES,
 } from '../actions/types'
+import { mapToObject } from '../../lib/util'
 
 export interface State {
     articles: { [key: number]: Article }
@@ -39,6 +41,18 @@ export default function appReducer(state: State = initialState, action: AppActio
                         map[article.id.valueOf()] = article
                         return map
                     }, {}),
+                },
+            }
+        case REMOVE_ARTICLES:
+            return {
+                ...state,
+                articles: {
+                    ...mapToObject<Article>(
+                        Object.values(state.articles).filter(
+                            (a) => action.articles.indexOf(a.id) === -1
+                        ),
+                        'id'
+                    ),
                 },
             }
         case SET_USERS:

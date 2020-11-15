@@ -8,6 +8,7 @@ import {
     createCommentResponseDTO,
     editArticleResponseDTO,
     createArticleResponseDTO,
+    deleteArticleResponseDTO,
 } from '../../../shared/dto/response-dto'
 import {
     mapFromArticlesDTO,
@@ -131,6 +132,17 @@ class ApiService {
             })
             .catch((err) => {
                 return null
+            })
+    }
+
+    deleteArticle(articleId: ArticleID): Promise<boolean> {
+        return this.api
+            .delete<deleteArticleResponseDTO>(`/article/${articleId}`)
+            .then((response) => {
+                return response.data.success
+            })
+            .catch((err) => {
+                return false
             })
     }
 

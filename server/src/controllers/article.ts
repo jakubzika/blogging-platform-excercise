@@ -26,6 +26,7 @@ import {
     listArticlesResponseDTO,
     editArticleResponseDTO,
     createArticleResponseDTO,
+    deleteArticleResponseDTO,
 } from '../../../shared/dto/response-dto'
 import { queryParamToBool } from '../lib/util'
 import { FindOneOptions } from 'typeorm'
@@ -211,9 +212,17 @@ export class ArticleController implements RouteHandler {
             return
         }
 
-        article.remove()
+        let response: deleteArticleResponseDTO
+        try {
+            article.remove()
+            response = {
+                success: true,
+            }
+        } catch (err) {
+            response.success = false
+        }
 
-        res.send('ok')
+        res.send(response)
         next()
     }
 }

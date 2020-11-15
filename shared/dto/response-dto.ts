@@ -66,3 +66,7 @@ export type editArticleResponseDTO = {
     success: boolean
     article?: articleDTO
 }
+
+export type deleteArticleResponseDTO = {
+    success: boolean
+}
