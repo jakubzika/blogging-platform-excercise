@@ -14,7 +14,7 @@ export const mapFromArticleDTO = (article: articleDTO): Article => ({
     ...article,
     created: new Date(article.created),
     edited: article.edited ? new Date(article.edited) : null,
-    loaded: article.content !== null,
+    loaded: !!article.content,
     comments: null,
 })
 
