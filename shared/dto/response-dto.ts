@@ -56,3 +56,13 @@ export type responseDTO = {
 export type createCommentResponseDTO = {
     comment: commentDTO
 }
+
+export type createArticleResponseDTO = {
+    success: boolean
+    article?: articleDTO
+}
+
+export type editArticleResponseDTO = {
+    success: boolean
+    article?: articleDTO
+}

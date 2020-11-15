@@ -6,6 +6,8 @@ import {
     loginResponseDTO,
     authorizedUserdResponseDTO,
     createCommentResponseDTO,
+    editArticleResponseDTO,
+    createArticleResponseDTO,
 } from '../../../shared/dto/response-dto'
 import {
     mapFromArticlesDTO,
@@ -16,7 +18,7 @@ import {
     mapFromCommentDTO,
 } from '../lib/dto-mapper'
 import { Article, ArticleID, User, ArticleComment, UserID } from '../types'
-import { getArticlesDTO } from '../../../shared/dto/request-dto'
+import { getArticlesDTO, editArticleDTO, createArticleDTO } from '../../../shared/dto/request-dto'
 
 import { boolToString } from '../lib/util'
 
@@ -88,6 +90,47 @@ class ApiService {
                     article: mapFromArticleDTO(response.data.article),
                     creator: mapFromUserDTO(response.data.creator),
                 }
+            })
+    }
+
+    editArticle(
+        articleId: ArticleID,
+        title: string,
+        perex: string,
+        content: string
+    ): Promise<Article> {
+        const request: editArticleDTO = {
+            title,
+            perex,
+            content,
+        }
+
+        return this.api
+            .patch<editArticleResponseDTO>(`/article/${articleId.valueOf()}`, request)
+            .then((response) => {
+                if (!response.data.success) return null
+                return mapFromArticleDTO(response.data.article)
+            })
+            .catch((err) => {
+                return null
+            })
+    }
+
+    createArticle(title: string, perex: string, content: string) {
+        const request: createArticleDTO = {
+            title,
+            perex,
+            content,
+        }
+
+        return this.api
+            .post<createArticleResponseDTO>(`/article/`, request)
+            .then((response) => {
+                if (!response.data.success) return null
+                return mapFromArticleDTO(response.data.article)
+            })
+            .catch((err) => {
+                return null
             })
     }
 

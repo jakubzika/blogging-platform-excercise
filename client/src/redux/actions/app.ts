@@ -57,6 +57,31 @@ export function loadArticle(
     }
 }
 
+export function createArticle(title: string, perex: string, content: string): AppThunk {
+    return async (dispatch) => {
+        dispatch(setLoadingState(LoadingState.LOADING, 'articleCreate'))
+        const article = await api.createArticle(title, perex, content)
+        if (!article) dispatch(setLoadingState(LoadingState.FAILURE, 'articleCreate'))
+        dispatch(setArticles([article]))
+        dispatch(setLoadingState(LoadingState.SUCCESS, 'articleCreate'))
+    }
+}
+
+export function editArticle(
+    articleId: ArticleID,
+    title: string,
+    perex: string,
+    content: string
+): AppThunk {
+    return async (dispatch) => {
+        dispatch(setLoadingState(LoadingState.LOADING, 'articleEdit'))
+        const article = await api.editArticle(articleId, title, perex, content)
+        if (!article) dispatch(setLoadingState(LoadingState.FAILURE, 'articleEdit'))
+        dispatch(setArticles([article]))
+        dispatch(setLoadingState(LoadingState.SUCCESS, 'articleEdit'))
+    }
+}
+
 export function setComments(articleId: ArticleID, comments: ArticleComment[]): AppActionType {
     return {
         type: SET_COMMENTS,

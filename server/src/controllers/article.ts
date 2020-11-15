@@ -22,7 +22,11 @@ import {
     mapArticlesWithCreatorsDTO,
     mapUserDTO,
 } from '../lib/dto-mapper'
-import { listArticlesResponseDTO } from '../../../shared/dto/response-dto'
+import {
+    listArticlesResponseDTO,
+    editArticleResponseDTO,
+    createArticleResponseDTO,
+} from '../../../shared/dto/response-dto'
 import { queryParamToBool } from '../lib/util'
 import { FindOneOptions } from 'typeorm'
 
@@ -140,9 +144,21 @@ export class ArticleController implements RouteHandler {
         article.title = articleDTO.title
         article.creator = user
 
-        article = await this.articleRepository.save(article)
+        let response: createArticleResponseDTO
 
-        res.send(mapArticleDTO(article))
+        try {
+            article = await this.articleRepository.save(article)
+            response = {
+                success: true,
+                article: mapArticleDTO(article),
+            }
+        } catch (err) {
+            response = {
+                success: false,
+            }
+        }
+
+        res.send(response)
         next()
     }
 
@@ -158,17 +174,30 @@ export class ArticleController implements RouteHandler {
         ])
         if (article === undefined) {
             next(new errors.NotFoundError('Article with given id does not exist'))
+            return
         } else if (article.creatorId !== userId) {
             next(new errors.UnauthorizedError('User does not have access to this article'))
+            return
         }
 
         article.content = editArticleDTO.content
         article.perex = editArticleDTO.perex
         article.title = editArticleDTO.title
 
-        await this.articleRepository.save(article)
+        let response: editArticleResponseDTO
+        try {
+            const updatedArticle = await this.articleRepository.save(article)
+            response = {
+                success: true,
+                article: mapArticleDTO(updatedArticle),
+            }
+        } catch (err) {
+            response = {
+                success: false,
+            }
+        }
 
-        res.send(mapArticleDTO(article))
+        res.send(response)
         next()
     }
 
