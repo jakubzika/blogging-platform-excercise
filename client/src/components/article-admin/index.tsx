@@ -11,9 +11,10 @@ import { ArticleEditor } from '../article-editor'
 export type ArticleAdminProps = {
     articles: Article[]
     loadArticle: (articleId: ArticleID) => any
+    deleteArticle: (articleId: ArticleID) => any
 }
 
-export function ArticleAdmin({ articles }: ArticleAdminProps) {
+export function ArticleAdmin({ articles, deleteArticle }: ArticleAdminProps) {
     return (
         <div>
             <div>
@@ -24,7 +25,7 @@ export function ArticleAdmin({ articles }: ArticleAdminProps) {
                     <Button onClick={() => {}}>Create new article</Button>
                 </Link>
             </div>
-            <ArticleAdminList articles={articles} />
+            <ArticleAdminList articles={articles} deleteArticle={deleteArticle} />
         </div>
     )
 }

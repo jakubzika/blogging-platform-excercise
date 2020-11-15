@@ -11,9 +11,10 @@ import { Link } from 'react-router-dom'
 
 export type ArticleAdminListProps = {
     articles: Article[]
+    deleteArticle: (articleId: ArticleID) => any
 }
 
-export function articleAdminListItem(article: Article) {
+export function articleAdminListItem(article: Article, deleteArticle: () => any) {
     return (
         <div key={article.id} className={style.Item}>
             <span className={style.Title}>{article.title}</span>
@@ -25,14 +26,16 @@ export function articleAdminListItem(article: Article) {
                 </Link>
             </span>
             <span className={style.Delete}>
-                <FiTrash2 />
+                <a onClick={deleteArticle} href={'#'}>
+                    <FiTrash2 />
+                </a>
             </span>
             <hr />
         </div>
     )
 }
 
-export function ArticleAdminList({ articles }: ArticleAdminListProps) {
+export function ArticleAdminList({ articles, deleteArticle }: ArticleAdminListProps) {
     return (
         <div className={style.ArticleAdminList}>
             <div className={style.TableLabels}>
@@ -42,7 +45,7 @@ export function ArticleAdminList({ articles }: ArticleAdminListProps) {
                 <span>Actions</span>
             </div>
             <hr />
-            {articles.map((a: Article) => articleAdminListItem(a))}
+            {articles.map((a: Article) => articleAdminListItem(a, () => deleteArticle(a.id)))}
         </div>
     )
 }

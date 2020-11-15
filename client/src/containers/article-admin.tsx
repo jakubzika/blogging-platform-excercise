@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from 'react-redux'
 import { AppState } from '../redux/reducers'
 
 import { Title } from '../components/title'
-import { loadArticles, loadArticle } from '../redux/actions/app'
+import { loadArticles, loadArticle, deleteArticle } from '../redux/actions/app'
 import { getLoggedInUser, getUsersArticles } from '../selectors'
 import { ArticleAdminList } from '../components/article-admin-list'
 
@@ -19,6 +19,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch) => ({
     loadArticles: (userId) => dispatch(loadArticles({ fromUser: userId })),
     loadArticle: (articleId) => dispatch(loadArticle(articleId, true, true)),
+    deleteArticle: (articleId) => dispatch(deleteArticle(articleId)),
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -43,6 +44,7 @@ class ArticleAdminPage extends React.Component<ArticleAdminPageprops> {
                 <ArticleAdmin
                     articles={Object.values(articles)}
                     loadArticle={this.props.loadArticle}
+                    deleteArticle={this.props.deleteArticle}
                 />
             </div>
         )
