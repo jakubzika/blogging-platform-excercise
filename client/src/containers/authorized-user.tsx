@@ -5,6 +5,7 @@ import { getLoggedInUser } from '../selectors'
 
 const mapStateToProps = (state: AppState) => ({
     loggedInUser: getLoggedInUser(state),
+    loginState: state.auth.state,
 })
 
 const mapDispatchToProps = (dispatch) => ({})

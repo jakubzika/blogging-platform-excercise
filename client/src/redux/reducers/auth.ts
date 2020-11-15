@@ -4,6 +4,7 @@ import { AppActionType, USER_LOGIN, USER_LOGOUT, SET_LOGIN_LOADING_STATE } from 
 export enum loginStateEnum {
     LOGGED_OUT,
     LOGGED_IN,
+    LOADING,
 }
 
 export interface AuthorizationState {
@@ -13,7 +14,7 @@ export interface AuthorizationState {
 }
 
 const initialAuthState: AuthorizationState = {
-    state: loginStateEnum.LOGGED_OUT,
+    state: loginStateEnum.LOADING,
     userId: null,
     token: null,
 }
