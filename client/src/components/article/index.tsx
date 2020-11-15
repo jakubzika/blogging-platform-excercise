@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import marked from 'marked'
 
 import { Article, User, UsersObject } from '../../types'
 import { Title } from '../title'
@@ -25,7 +26,12 @@ export function Article({ article, creator, users, addComment }: ArticleProps) {
                 <span className={style.SeparatorDot}></span>
                 <span>{moment(article.created).fromNow()}</span>
             </div>
-            <p className={style.Content}>{article.content}</p>
+            <div className={style.Content}>
+                {article.content && (
+                    //TODO: sanitize - XSS is possible right now
+                    <p dangerouslySetInnerHTML={{ __html: marked(article.content) }}></p>
+                )}
+            </div>
             <hr className={style.Separator} />
             <h2>Comments {article.comments && ` (${article.comments.length})`}</h2>
             {article.comments && (
