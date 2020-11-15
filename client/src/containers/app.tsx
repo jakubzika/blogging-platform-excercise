@@ -7,7 +7,7 @@ import { AppState } from '../redux/reducers/index'
 
 import MainPage from './main'
 import ArticlePage from './article'
-import NavigationBar from './navigation-bar'
+import { NavigationBar } from '../components/navigation-bar'
 import LoginPage from './login'
 import ArticleAdminPage from './article-admin'
 import CreateArticle from './create-article'

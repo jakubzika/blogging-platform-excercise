@@ -1,0 +1,42 @@
+@import '../../assets/styles/variables.scss';
+
+.NavigationBar {
+    position: fixed;
+    width:100%;
+    top: 0;
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    // width: 100vw;
+    background-color: $navigation-bar-background;
+    
+    .LeftSide, .RightSide {
+        display: inline-block;
+        margin: 20px;
+
+        &>div{
+            display: inline-block;
+            margin-left: 22px;
+            margin-right: 22px;
+        }
+    }
+
+    .LeftSide {
+        text-align: left;
+    }
+    
+    .RightSide {
+        text-align: right;
+        float: right;
+    }
+
+    .Link {
+        margin-left: 18px;
+        margin-right: 18px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
