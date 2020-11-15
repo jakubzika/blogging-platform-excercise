@@ -1,4 +1,4 @@
-import { AppActionType, SET_LOGIN_LOADING_STATE, AppThunk, USER_LOGIN } from './types'
+import { AppActionType, SET_LOGIN_LOADING_STATE, AppThunk, USER_LOGIN, USER_LOGOUT } from './types'
 import { LoadingState, UserID, User } from '../../types'
 import api from '../../services/api'
 import { setUsers } from './app'
@@ -17,6 +17,12 @@ export function userLogin(userId: UserID, token: string): AppActionType {
         type: USER_LOGIN,
         token,
         userId,
+    }
+}
+
+export function userLogout(): AppActionType {
+    return {
+        type: USER_LOGOUT,
     }
 }
 
@@ -46,7 +52,10 @@ export function restoreUser(): AppThunk {
                 dispatch(userLogin(user.id, token))
             } else {
                 api.setToken(null)
+                dispatch(userLogout())
             }
+        } else {
+            dispatch(userLogout())
         }
     }
 }
