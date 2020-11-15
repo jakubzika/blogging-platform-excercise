@@ -79,7 +79,6 @@ export class UserAuthorizationController implements RouteHandler {
 
     async create(req: Request, res: Response, next: Next) {
         const creation: UserCreationObject = req.body
-        console.log('creation', creation)
 
         try {
             const result = await UserManager.createuser(creation)

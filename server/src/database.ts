@@ -8,7 +8,7 @@ export class DatabaseProvider {
     /**
      * Initialization of database connection
      */
-    public static async initialize() {
+    static async initialize() {
         const config: DatabaseConfig = Configuration.getDatabaseConfig()
         DatabaseProvider.connection = await createConnection({
             type: 'postgres',
@@ -24,7 +24,7 @@ export class DatabaseProvider {
     /**
      * @returns Promise with Connection database handler
      */
-    public static async getConnection(): Promise<Connection> {
+    static async getConnection(): Promise<Connection> {
         if (DatabaseProvider.connection) {
             return DatabaseProvider.connection
         }

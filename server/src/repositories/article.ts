@@ -6,13 +6,13 @@ import { User } from '../entity/user'
 
 @EntityRepository(Article)
 export class ArticleRepository extends Repository<Article> {
-    public getArticleWithVotes(id: number): Article {
+    getArticleWithVotes(id: number): Article {
         throw 'Not implemented'
     }
 
     // derive
 
-    public async getArticles(options?: {
+    async getArticles(options?: {
         skip?: number
         take?: number
         where?: string[]
@@ -33,7 +33,7 @@ export class ArticleRepository extends Repository<Article> {
         return articles
     }
 
-    public async getArticlesWithCreators(options: {
+    async getArticlesWithCreators(options: {
         skip?: number
         take?: number
         where?: string[]

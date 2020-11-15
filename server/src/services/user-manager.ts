@@ -29,7 +29,7 @@ export enum UserAuthenticationError {
 
 // TODO : error handling
 export class UserManager {
-    public static async createuser(
+    static async createuser(
         userCreationObject: UserCreationObject
     ): Promise<User | UserCreationError> {
         // logic for duplicity
@@ -50,9 +50,7 @@ export class UserManager {
         return await User.save(user)
     }
 
-    public static async authenticate(
-        login: LoginCredentials
-    ): Promise<User | UserAuthenticationError> {
+    static async authenticate(login: LoginCredentials): Promise<User | UserAuthenticationError> {
         const user = await User.findOne({ email: login.email })
         if (user === undefined) {
             return UserAuthenticationError.NO_ACCOUNT_WITH_EMAIL
@@ -67,5 +65,5 @@ export class UserManager {
         }
     }
 
-    public static async restifyUserMapperPlugin(req: Request, res: Response, next: Next) {}
+    static async restifyUserMapperPlugin(req: Request, res: Response, next: Next) {}
 }

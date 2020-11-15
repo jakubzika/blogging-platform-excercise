@@ -6,13 +6,13 @@ import { HttpServerConfig } from './configuration'
 import { RouteHandler } from './controllers/route'
 
 export class Server {
-    private restify: restify.Server
-    private config: HttpServerConfig
+    restify: restify.Server
+    config: HttpServerConfig
 
     /**
      * @param  {HttpServerConfig} config, not pulled from singleton instance as we would lock ourselves to only having one instance of server class
      */
-    public constructor(config: HttpServerConfig, controllers: RouteHandler[]) {
+    constructor(config: HttpServerConfig, controllers: RouteHandler[]) {
         this.config = config
 
         this.restify = restify.createServer(config.options)
@@ -28,7 +28,7 @@ export class Server {
         return new Router(this.restify)
     }
 
-    private addPlugins() {
+    addPlugins() {
         this.restify.use(restify.plugins.queryParser())
         this.restify.use(restify.plugins.bodyParser())
 
@@ -46,7 +46,7 @@ export class Server {
     /**
      * starts server
      */
-    public start() {
+    start() {
         this.restify.listen(this.config.port)
     }
 }

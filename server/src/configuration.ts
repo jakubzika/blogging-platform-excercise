@@ -33,13 +33,13 @@ export class Configuration {
      * @param  {string} path to the config
      * @returns void
      */
-    public static setLocation(location: string): void {
+    static setLocation(location: string): void {
         Configuration.location = location
     }
     /**
      * @returns Config
      */
-    public static getConfiguration(): Config {
+    static getConfiguration(): Config {
         if (Configuration.config) {
             return Configuration.config
         }
@@ -54,13 +54,13 @@ export class Configuration {
     /**
      * @returns DatabaseConfig
      */
-    public static getDatabaseConfig(): DatabaseConfig {
+    static getDatabaseConfig(): DatabaseConfig {
         return Configuration.getConfiguration().database
     }
     /**
      * @returns jwt secret key
      */
-    public static getJwtSecret(): string {
+    static getJwtSecret(): string {
         return Configuration.getConfiguration().server.jwtSecret
     }
 }
