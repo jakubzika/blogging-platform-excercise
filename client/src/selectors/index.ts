@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { AppState } from '../redux/reducers'
 import { User, UserID, UsersObject, StoreObject, Article } from '../types'
 import { loginStateEnum } from '../redux/reducers/auth'
+import { mapToObject } from '../lib/util'
 
 const getUsers = (state: AppState): UsersObject => state.app.users
 const getLoggedInUserId = (state: AppState): UserID => state.auth.userId
@@ -22,9 +23,12 @@ const getArticles = (state: AppState): StoreObject<Article> => state.app.article
 
 export const getUsersArticles = createSelector(
     [getArticles, getLoggedInUser],
-    (articles, user): Article[] => {
+    (articles, user): StoreObject<Article> => {
         if (user === null) return []
 
-        return Object.values(articles).filter((a) => a.creator === user.id)
+        return mapToObject(
+            Object.values(articles).filter((a) => a.creator === user.id),
+            'id'
+        )
     }
 )

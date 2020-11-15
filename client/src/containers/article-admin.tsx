@@ -4,11 +4,12 @@ import { connect, ConnectedProps } from 'react-redux'
 import { AppState } from '../redux/reducers'
 
 import { Title } from '../components/title'
-import { loadArticles } from '../redux/actions/app'
+import { loadArticles, loadArticle } from '../redux/actions/app'
 import { getLoggedInUser, getUsersArticles } from '../selectors'
 import { ArticleAdminList } from '../components/article-admin-list'
 
 import style from '../assets/styles/containers.scss'
+import { ArticleAdmin } from '../components/article-admin'
 
 const mapStateToProps = (state: AppState) => ({
     loggedInUser: getLoggedInUser(state),
@@ -17,6 +18,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loadArticles: (userId) => dispatch(loadArticles({ fromUser: userId })),
+    loadArticle: (articleId) => dispatch(loadArticle(articleId, true, true)),
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -32,10 +34,16 @@ class ArticleAdminPage extends React.Component<ArticleAdminPageprops> {
     }
 
     render() {
+        const articles = Object.values(this.props.articles).sort(
+            (a: any, b: any) => b.created - a.created
+        )
+
         return (
             <div className={style.ArticleAdminList}>
-                <Title>My articles</Title>
-                <ArticleAdminList articles={this.props.articles} />
+                <ArticleAdmin
+                    articles={Object.values(articles)}
+                    loadArticle={this.props.loadArticle}
+                />
             </div>
         )
     }
