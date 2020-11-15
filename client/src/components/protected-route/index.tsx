@@ -15,7 +15,7 @@ function protectedRoute({ component, loginState, loggedInUser, ...rest }: Protec
     } else if (loggedInUser !== null) {
         return <Route {...rest} component={component} />
     } else {
-        return <Redirect to={'/'} />
+        return <Redirect to={'/login'} />
     }
 }
 
