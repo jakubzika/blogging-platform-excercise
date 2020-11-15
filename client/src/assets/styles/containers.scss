@@ -24,18 +24,28 @@
     // box-shadow: 0 0 20px rgb(86, 86, 86);
 }
 
-.NavigationBar {
-    margin: 0;
-    padding: 10px;
-    background-color: $navigation-bar-background;
-}
-
 .ArticleAdminList {
     width: 80em;
     margin: auto;
-    margin-top: 6em;
+    margin-top: 2em;
     padding: 40px;
     padding-top: 0;
     
     
+}
+
+.CreateArticle {
+    width: 40em;
+    margin: auto;
+    margin-top: 2em;
+    padding: 40px;
+    padding-top: 0;
+}
+
+.EditArticle {
+    width: 40em;
+    margin: auto;
+    margin-top: 2em;
+    padding: 40px;
+    padding-top: 0;
 }

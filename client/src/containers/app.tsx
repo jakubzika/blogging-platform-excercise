@@ -10,6 +10,8 @@ import ArticlePage from './article'
 import NavigationBar from './navigation-bar'
 import LoginPage from './login'
 import ArticleAdminPage from './article-admin'
+import CreateArticle from './create-article'
+import EditArticle from './edit-article'
 
 import { restoreUser } from '../redux/actions/auth'
 import { ProtectedRoute } from '../components/protected-route'
@@ -46,6 +48,8 @@ class App extends React.Component<AppProps> {
                 <NavigationBar />
                 <Switch>
                     <Route path="/article/:id" component={ArticlePage}></Route>
+                    <ProtectedRoute path="/profile/edit-article/:id" component={EditArticle} />
+                    <ProtectedRoute path="/profile/create-article" component={CreateArticle} />
                     <ProtectedRoute path="/profile" component={ArticleAdminPage} />
                     <Route path="/login" component={LoginPage}></Route>
                     <Route path="/" component={MainPage}></Route>
