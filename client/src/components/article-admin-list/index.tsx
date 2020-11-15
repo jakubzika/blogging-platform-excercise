@@ -7,6 +7,7 @@ import { ArticleID, Article } from '../../types'
 
 import style from './style.scss'
 import { cropString } from '../../lib/util'
+import { Link } from 'react-router-dom'
 
 export type ArticleAdminListProps = {
     articles: Article[]
@@ -19,7 +20,9 @@ export function articleAdminListItem(article: Article) {
             <span className={style.Perex}> {article.perex}</span>
             <span className={style.Created}>{moment(article.created).format('DD.MM. YYYY')}</span>
             <span className={style.Edit}>
-                <FiEdit2 />
+                <Link to={`/profile/edit-article/${article.id}`}>
+                    <FiEdit2 />
+                </Link>
             </span>
             <span className={style.Delete}>
                 <FiTrash2 />
