@@ -55,7 +55,7 @@ export class UserManager {
         user.articles = []
         user.comments = []
         user.email = userCreationObject.email
-        user.name = userCreationObject.email
+        user.name = userCreationObject.name
         user.password = hashedPassword
 
         return await User.save(user)
