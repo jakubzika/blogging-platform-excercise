@@ -1,9 +1,12 @@
 # Blogging platform exercise
+
+`version 0.0.0`
+
 For interview tech skills evaluation
 
-## Live demo
+Features backlog [here](./docs/backlog.md)
 
-- live demo can be found here
+[live demo](http://104.248.43.170:8000) 
 
 ## Dependencies
 
@@ -14,6 +17,8 @@ For interview tech skills evaluation
 ## Structure
 
 This project consists of server and client where each of them has separate `package.json`
+
+More information  [here](./docs/structure.md)
 
 ### Server
 
@@ -33,8 +38,8 @@ Copy `sample.config.yml` into `config.yml` and fill out the values according to 
 Then install packages for server and client
 
 ```bash
-blogging-platform-excercise/server$ yarn
-blogging-platform-excercise/client$ yarn
+blogging-platform-exercise/server$ yarn
+blogging-platform-exercise/client$ yarn
 ```
 
 ## Development
@@ -42,7 +47,7 @@ blogging-platform-excercise/client$ yarn
 **server:**
 
 ```bash
-blogging-platform-excercise/server$ yarn run dev
+blogging-platform-exercise/server$ yarn run dev
 ```
 
 **client:**
@@ -50,7 +55,7 @@ blogging-platform-excercise/server$ yarn run dev
 check at `config.yml` that `client.apiRoute` links to the server
 
 ```bash
-blogging-platform-excercise/client$ yarn run dev
+blogging-platform-exercise/client$ yarn run dev
 ```
 
 go to http://localhost:9000/
@@ -62,7 +67,7 @@ build can be found at `server/dist/` and `client/dist/`
 **server:**
 
 ```bash
-blogging-platform-excercise/server$ yarn run build
+blogging-platform-exercise/server$ yarn run build
 ```
 
 **client:**
@@ -70,7 +75,7 @@ blogging-platform-excercise/server$ yarn run build
 check at `config.yml` that `client.apiRoute` links to the server
 
 ```bash
-blogging-platform-excercise/client$ yarn run build
+blogging-platform-exercise/client$ yarn run build
 ```
 
 
