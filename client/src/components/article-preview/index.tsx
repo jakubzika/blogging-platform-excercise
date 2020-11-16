@@ -22,7 +22,7 @@ export function ArticlePreview({ article, user, load }: ArticlePreviewProps) {
             </div>
             <p className={style.Perex}>{article.perex}</p>
             <div>
-                <Link to={`/article/${article.id}`} onClick={load} className={style.ReadMore}>
+                <Link to={`/article/${article.id}`} className={style.ReadMore}>
                     Read whole article
                 </Link>
             </div>
