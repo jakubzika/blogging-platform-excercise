@@ -1,5 +1,8 @@
 import React from 'react'
-import { authorizedUserConnector } from '../../containers/authorized-user'
+import {
+    authorizedUserConnector,
+    AuthorizedUserConnectorProps,
+} from '../../containers/authorized-user'
 import { User } from '../../types'
 
 import { FiUser } from 'react-icons/fi'
@@ -7,11 +10,9 @@ import { FiUser } from 'react-icons/fi'
 import style from './style.scss'
 import { Link } from 'react-router-dom'
 
-export type NavigationBarProps = {
-    loggedInUser: User
-}
+export type NavigationBarProps = AuthorizedUserConnectorProps & {}
 
-export function navigationBar({ loggedInUser }: NavigationBarProps) {
+export function navigationBar({ loggedInUser, logout }: NavigationBarProps) {
     const loggedIn = loggedInUser !== null
 
     return (
@@ -36,7 +37,15 @@ export function navigationBar({ loggedInUser }: NavigationBarProps) {
                         {loggedInUser.name}
                     </span>
                 )}
-                {!loggedIn ? <Link to="/login">Log in →</Link> : <div>logout</div>}
+                {!loggedIn ? (
+                    <Link to="/login">Log in →</Link>
+                ) : (
+                    <div>
+                        <a onClick={logout} href="#">
+                            logout
+                        </a>
+                    </div>
+                )}
             </div>
         </div>
     )

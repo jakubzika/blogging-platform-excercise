@@ -13,7 +13,7 @@ class LocalStoreService {
         localStorage.setItem('user-token', token)
     }
 
-    clearToken(token: string) {
+    clearToken() {
         localStorage.removeItem('user-token')
     }
 }

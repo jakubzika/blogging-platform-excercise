@@ -59,3 +59,12 @@ export function restoreUser(): AppThunk {
         }
     }
 }
+
+export function logout(): AppThunk {
+    return async (dispatch) => {
+        localStoreService.clearToken()
+        // TODO: invalidate token on server
+        dispatch(userLogout())
+        window.location.reload()
+    }
+}
