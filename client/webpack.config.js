@@ -72,7 +72,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve('../dist/client'),
+        path: path.resolve('dist/'),
         publicPath: '/',
     },
     plugins: [

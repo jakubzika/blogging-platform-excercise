@@ -2,6 +2,7 @@ client/node_modules/
 server/node_modules/
 .vscode/
 server/dist/
+client/dist/
 
 config.yml
 production.config.yml
