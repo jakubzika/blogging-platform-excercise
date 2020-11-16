@@ -41,7 +41,6 @@ export class ArticleController implements RouteHandler {
 
         router.setBase('/article')
         router.get('/', this.list.bind(this))
-        router.get('/by/:user', this.listByUser.bind(this))
         router.get('/:article', this.get.bind(this))
         router.post('/', this.create.bind(this), { authentication: true })
         router.patch('/:article', this.update.bind(this), { authentication: true })
