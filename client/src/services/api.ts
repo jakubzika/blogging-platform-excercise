@@ -23,14 +23,7 @@ import { getArticlesDTO, editArticleDTO, createArticleDTO } from '../../../share
 
 import { boolToString } from '../lib/util'
 
-const API_URL = 'http://localhost:8080'
-
-//axios.defaults.baseURL = API_URL
-
-// axios.interceptors.request.use((config) => {
-//     config.headers = { Authorization: `Bearer ${}`}
-//     return config
-// })
+const API_URL = process.env.API_URL
 
 // TODO: error handling
 class ApiService {

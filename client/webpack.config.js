@@ -1,13 +1,22 @@
 const path = require('path');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const YAML = require('yaml')
+const fs = require('fs')
 
+var config = {}
+function loadConfig() {
+    config = YAML.parse(fs.readFileSync('../config.yml','utf8'))
+}
+
+loadConfig()
 
 module.exports = {
     mode: 'none',
     entry: {
         app: path.join(__dirname, 'src', 'index.tsx')
     },
+    devtool: 'inline-source-map',
     target: 'web',
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -47,7 +56,12 @@ module.exports = {
                 use: [
                     'file-loader',
                 ],
-            }, 
+            },
+            {
+                test: /\.ya?ml$/,
+                type: 'json',
+                use: 'yaml-loader'
+            }
         ],
     },
     devServer: {
@@ -66,7 +80,8 @@ module.exports = {
             template: path.join(__dirname, 'src', 'index.html'),
         }),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development')
+            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.API_URL': JSON.stringify(config.client.apiUrl)
         })
     ]
 }
