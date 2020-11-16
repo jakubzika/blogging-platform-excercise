@@ -19,9 +19,14 @@ export interface HttpServerConfig {
     jwtSecret: string
 }
 
+export interface ClientConfig {
+    apiUrl: string
+}
+
 export interface Config {
     database: DatabaseConfig
     server: HttpServerConfig
+    client: ClientConfig
 }
 /**
  * Singleton class managing server configuration
