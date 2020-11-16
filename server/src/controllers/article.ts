@@ -14,7 +14,7 @@ import {
     editArticleDTO,
 } from '../../../shared/dto/request-dto'
 import { ArticleRepository } from '../repositories/article'
-import { DatabaseProvider } from '../database'
+import { DatabaseProvider } from '../services/database'
 
 import {
     mapArticleDTO,

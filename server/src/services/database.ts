@@ -1,6 +1,6 @@
 import { Connection, createConnection } from 'typeorm'
-import { DatabaseConfig, Configuration } from './configuration'
-import { entities } from './entity'
+import { DatabaseConfig, Configuration } from '../configuration'
+import { entities } from '../entity'
 
 export class DatabaseProvider {
     static connection: Connection
