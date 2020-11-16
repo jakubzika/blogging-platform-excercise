@@ -1,0 +1,16 @@
+# Fill out values and save copy to config.yml
+database:
+  host: localhost
+  username: postgres
+  password: database-password
+  port: 5432
+  database: blog
+
+server:
+  port: 8080
+  options:
+    url: 0.0.0.0
+  jwtSecret: secret
+
+client:
+  apiUrl: http://127.0.0.1:8080

@@ -1,0 +1,38 @@
+@import '../../assets/styles/variables.scss';
+
+.LoginInputContainer {
+    // text-align: center;
+    color: inherit;
+
+    
+}
+
+.InputGroup {
+    margin: 10px;
+    // margin-bottom: 14px;
+    input {
+        padding: 6px;
+        width: 100%;
+        display: block;
+        
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 8px;
+        
+    }
+}
+
+
+.LoginButton {
+    text-align: right;
+}
+
+.InvalidPassword {
+    color: transparent;
+}
+
+.InvalidPasswordShow {
+    color: $error-color;
+}

@@ -1,0 +1,59 @@
+@import '../../assets/styles/variables.scss';
+
+.Article {
+    background-color: $back-color;
+    color: $base-color;
+    margin-bottom: 4em;
+}
+
+.Title {
+    font-size: 34px;
+    font-weight: normal;
+    margin-bottom: 0.8em;
+}
+
+.Perex {
+    line-height: 1.4em;
+    font-weight: 400;
+    font-size: 1em;
+    font-family: 'Aileron';
+    margin-bottom: 2em;
+}
+
+.SubInformation {
+    font-size: 1em;
+    // background-color: red;
+    color: $base-color-dim;
+    margin-bottom: 0.8em;
+
+    span {
+        padding: 8px;
+    }
+
+    
+}
+
+.SeparatorDot {
+    font-size: 1em;
+    font-weight: 900;
+
+    &:after {
+
+        content: " \B7 ";
+    }
+    
+    // color: blue;
+}
+
+
+.ReadMore {
+    color: $secondary-color;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+        cursor: pointer;
+        color: darken($secondary-color,20)
+    }
+
+}

@@ -1,0 +1,40 @@
+@import '../../assets/styles/variables.scss';
+
+.SubInformation {
+    font-size: 1em;
+    // background-color: red;
+    color: $base-color-dim;
+    margin-bottom: 1.4em;
+
+    span {
+        padding: 8px;
+    }
+
+    
+}
+
+.SeparatorDot {
+    font-size: 1em;
+    font-weight: 900;
+
+    &:after {
+
+        content: " \B7 ";
+    }
+    
+    // color: blue;
+}
+
+.Content {
+    line-height: 1.5em;
+}
+
+.Separator {
+    // border-color: lighten($base-color,100);
+    // color: red;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    background-color: lighten($base-color,80);
+    height: 1px;
+    border: 0;
+}
