@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { User } from '../entity/user'
 import { Request, Response, Next } from 'restify'
 
+// TODO: move to request DTO's
 // substitute for DTO
 export interface UserCreationObject {
     name: string
@@ -28,7 +29,17 @@ export enum UserAuthenticationError {
 }
 
 // TODO : error handling
+/**
+ * Class managing user authorization and creation
+ *
+ */
 export class UserManager {
+    /**
+     * Creates user
+     *
+     * @param  {UserCreationObject} userCreationObject
+     * @returns Promise, either User object or user creation error
+     */
     static async createuser(
         userCreationObject: UserCreationObject
     ): Promise<User | UserCreationError> {
@@ -50,6 +61,14 @@ export class UserManager {
         return await User.save(user)
     }
 
+    /**
+     * Authenticates user
+     *
+     *
+     * @param  {LoginCredentials.email} login - users email address
+     * @param  {LoginCredentials.password} login - users password
+     * @returns Promise, either User object or authnetication error
+     */
     static async authenticate(login: LoginCredentials): Promise<User | UserAuthenticationError> {
         const user = await User.findOne({ email: login.email })
         if (user === undefined) {
@@ -65,5 +84,5 @@ export class UserManager {
         }
     }
 
-    static async restifyUserMapperPlugin(req: Request, res: Response, next: Next) {}
+    // static async restifyUserMapperPlugin(req: Request, res: Response, next: Next) {}
 }

@@ -45,7 +45,6 @@ export class UserAuthorizationController implements RouteHandler {
         let response: loginResponseDTO
 
         if (result instanceof User) {
-            console.log('success')
             const data: JwtData = {
                 uid: result.id,
                 email: result.email,

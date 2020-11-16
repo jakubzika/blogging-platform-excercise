@@ -164,7 +164,6 @@ export class ArticleController implements RouteHandler {
     }
 
     async update(req: Request, res: Response, next: Next) {
-        // TODO: error handling, if article with given id does not exist
         const userId = req['user'].uid
         const editArticleDTO: editArticleDTO = req.body
         const articleId = req.params.article

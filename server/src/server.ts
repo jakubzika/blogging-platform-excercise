@@ -5,11 +5,16 @@ import corsMiddleware from 'restify-cors-middleware'
 import { HttpServerConfig } from './configuration'
 import { RouteHandler } from './controllers/route'
 
+/**
+ * Server class
+ */
 export class Server {
     restify: restify.Server
     config: HttpServerConfig
 
     /**
+     * Creates server instance
+     *
      * @param  {HttpServerConfig} config, not pulled from singleton instance as we would lock ourselves to only having one instance of server class
      */
     constructor(config: HttpServerConfig, controllers: RouteHandler[]) {
@@ -23,11 +28,17 @@ export class Server {
             h.registerHandler(this.getRouter())
         })
     }
-
+    /**
+     * @returns Router
+     */
     getRouter(): Router {
         return new Router(this.restify)
     }
 
+    /**
+     * Adds restify plugins to restify server instance
+     *
+     */
     addPlugins() {
         this.restify.use(restify.plugins.queryParser())
         this.restify.use(restify.plugins.bodyParser())
@@ -44,7 +55,7 @@ export class Server {
     }
 
     /**
-     * starts server
+     * Starts server
      */
     start() {
         this.restify.listen(this.config.port)

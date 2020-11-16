@@ -4,14 +4,17 @@ import { uniqBy, map } from 'lodash'
 import { Article } from '../entity/article'
 import { User } from '../entity/user'
 
+/**
+ * Repository containing more advanced operations with Article entity
+ */
 @EntityRepository(Article)
 export class ArticleRepository extends Repository<Article> {
-    getArticleWithVotes(id: number): Article {
-        throw 'Not implemented'
-    }
-
-    // derive
-
+    /**
+     * Fetches articles from database
+     *
+     * @param  {{skip?:numbertake?:numberwhere?:string[]}} options?
+     * @returns Promise
+     */
     async getArticles(options?: {
         skip?: number
         take?: number
@@ -32,7 +35,13 @@ export class ArticleRepository extends Repository<Article> {
 
         return articles
     }
-
+    /**
+     * Fetches articles from database
+     * including article creators
+     *
+     * @param  {{skip?:numbertake?:numberwhere?:string[]}} options
+     * @returns {Article[], User[]}
+     */
     async getArticlesWithCreators(options: {
         skip?: number
         take?: number

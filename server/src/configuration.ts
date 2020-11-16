@@ -23,13 +23,21 @@ export interface Config {
     database: DatabaseConfig
     server: HttpServerConfig
 }
-/** Singleton class manageing server configuration */
+/**
+ * Singleton class managing server configuration
+ *
+ * loads *.yml configuration
+ *
+ * configuration example is provided at projects root - sample.config.yml
+ *
+ * */
 export class Configuration {
     static config: Config
     static location: string
 
     /**
      * Sets path to the yaml file
+     *
      * @param  {string} path to the config
      * @returns void
      */
@@ -37,6 +45,7 @@ export class Configuration {
         Configuration.location = location
     }
     /**
+     *
      * @returns Config
      */
     static getConfiguration(): Config {
