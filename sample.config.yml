@@ -1,0 +1,12 @@
+database:
+  host: localhost
+  username: postgres
+  password: database-password
+  port: 5432
+  database: blog
+
+server:
+  port: 8080
+  options:
+    url: 0.0.0.0
+  jwtSecret: secret
