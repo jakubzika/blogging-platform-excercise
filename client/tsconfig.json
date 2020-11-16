@@ -5,7 +5,7 @@
       "target": "es6",
       "moduleResolution": "node",
       "sourceMap": true,
-      "outDir": "../dist/client",
+      "outDir": "dist/",
       "jsx": "react"
     },
     "include": ["src/**/*", "../shared/dto/dto.ts"]
