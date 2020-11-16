@@ -81,7 +81,6 @@ export class CommentController implements RouteHandler {
 
     async delete(req: Request, res: Response, next: Next) {
         const comment = await Comment.findOne(req.params.comment)
-        console.log('trying to delete comment', comment)
 
         if (comment === undefined) {
             next(new errors.NotFoundError('Comment not found'))

@@ -38,9 +38,6 @@ export class ArticleController implements RouteHandler {
         this.articleRepository = (await DatabaseProvider.getConnection()).getCustomRepository(
             ArticleRepository
         )
-        // this.userRepository = (await DatabaseProvider.getConnection()).getC(
-        //     ArticleRepository
-        // )
 
         router.setBase('/article')
         router.get('/', this.list.bind(this))
@@ -88,11 +85,6 @@ export class ArticleController implements RouteHandler {
         next()
     }
 
-    async listByUser(req: Request, res: Response, next: Next) {
-        const user: number = parseInt(req.params.user)
-        next(new errors.NotImplementedError('feature not yet implemented'))
-    }
-
     async get(req: Request, res: Response, next: Next) {
         let articleId: number
 
@@ -104,9 +96,6 @@ export class ArticleController implements RouteHandler {
             where: { id: articleId },
         }
 
-        // if (queryParams.includeComments && queryParamToBool(queryParams.includeComments)) {
-        //     dbQuery.relations.push('comments')
-        // }
         if (queryParams.includeCreator && queryParamToBool(queryParams.includeCreator)) {
             dbQuery.relations.push('creator')
         }

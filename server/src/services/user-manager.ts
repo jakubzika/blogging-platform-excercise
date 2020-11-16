@@ -64,7 +64,6 @@ export class UserManager {
     /**
      * Authenticates user
      *
-     *
      * @param  {LoginCredentials.email} login - users email address
      * @param  {LoginCredentials.password} login - users password
      * @returns Promise, either User object or authnetication error
