@@ -2,6 +2,9 @@ import * as restify from 'restify'
 import { Router } from './router'
 import corsMiddleware from 'restify-cors-middleware'
 
+import chalk from 'chalk'
+import moment from 'moment'
+
 import { HttpServerConfig } from './configuration'
 import { RouteHandler } from './controllers/route'
 
@@ -29,10 +32,20 @@ export class Server {
         })
     }
     /**
-     * @returns Router
+     *
+     * @returns Router instance
      */
     getRouter(): Router {
         return new Router(this.restify)
+    }
+
+    logRequest(request: restify.Request, response: restify.Response, next: restify.Next) {
+        console.log(
+            `${request.connection.remoteAddress} [${moment(moment.now()).format(
+                'YYYY-MM-DD hh:mm:ss'
+            )}] ${request.method} ${request.url}`
+        )
+        next()
     }
 
     /**
@@ -42,6 +55,7 @@ export class Server {
     addPlugins() {
         this.restify.use(restify.plugins.queryParser())
         this.restify.use(restify.plugins.bodyParser())
+        this.restify.pre(this.logRequest)
 
         const cors = corsMiddleware({
             preflightMaxAge: 5, //Optional
@@ -58,6 +72,7 @@ export class Server {
      * Starts server
      */
     start() {
-        this.restify.listen(this.config.port)
+        console.log(`Server running on ${this.config.options.url}:${this.config.port}`)
+        this.restify.listen(this.config.port, this.config.options.url)
     }
 }
