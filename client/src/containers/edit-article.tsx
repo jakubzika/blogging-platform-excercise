@@ -63,7 +63,7 @@ class EditArticlePage extends React.Component<EditArticlePageprops, EditArticleP
 
         return (
             <div className={style.EditArticle}>
-                <Title>Edit article {this.props.match.params.id}</Title>
+                <Title>Edit article</Title>
                 {!this.state.submitted && article && article.loaded && (
                     <ArticleEditor
                         content={article.content}
