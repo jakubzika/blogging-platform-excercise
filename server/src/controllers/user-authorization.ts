@@ -25,7 +25,6 @@ export class UserAuthorizationController implements RouteHandler {
     jwtSecret: string
     constructor() {
         this.jwtSecret = Configuration.getJwtSecret()
-        console.log('jwtSecret', this.jwtSecret)
     }
 
     registerHandler(router: Router) {
