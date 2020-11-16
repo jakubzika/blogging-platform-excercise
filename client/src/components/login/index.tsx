@@ -19,7 +19,6 @@ export function Login({ loginLoadingState, loginUser }: LoginProps) {
         <div>
             <div className={style.LoginInputContainer}>
                 <Title>Log In</Title>
-                {loginLoadingState}
                 <div className={style.InputGroup}>
                     <label>Email</label>
                     <input type={'email'} onChange={(e) => setEmail(e.target.value)} />
@@ -31,6 +30,13 @@ export function Login({ loginLoadingState, loginUser }: LoginProps) {
                         type={'password'}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                </div>
+                <div
+                    className={`${style.InvalidPassword} ${
+                        loginLoadingState == LoadingState.FAILURE && style.InvalidPasswordShow
+                    }`}
+                >
+                    Invalid email or password
                 </div>
                 <div className={style.LoginButton}>
                     <Button onClick={() => loginUser(email, password)}>Log In</Button>

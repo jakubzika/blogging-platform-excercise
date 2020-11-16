@@ -1,3 +1,5 @@
+@import '../../assets/styles/variables.scss';
+
 .LoginInputContainer {
     // text-align: center;
     color: inherit;
@@ -25,4 +27,12 @@
 
 .LoginButton {
     text-align: right;
+}
+
+.InvalidPassword {
+    color: transparent;
+}
+
+.InvalidPasswordShow {
+    color: $error-color;
 }

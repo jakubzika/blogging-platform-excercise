@@ -8,6 +8,8 @@ import style from '../assets/styles/containers.scss'
 import { Login } from '../components/login'
 import { login } from '../redux/actions/auth'
 import { Redirect } from 'react-router-dom'
+import { setLoadingState } from '../redux/actions/ui'
+import { LoadingState } from '../types'
 
 const mapStateToProps = (state: AppState) => ({
     loggedInUser: getLoggedInUser(state),
@@ -16,6 +18,8 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     loginUser: (email, password) => dispatch(login(email, password)),
+    setLoginLoadingState: (loadingState: LoadingState) =>
+        dispatch(setLoadingState(loadingState, 'loginLoading')),
 })
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
@@ -29,6 +33,11 @@ type LoginPageProps = connectorProps & {
 class LoginPage extends React.Component<LoginPageProps> {
     constructor(props) {
         super(props)
+        props.setLoginLoadingState(LoadingState.IDLE)
+    }
+
+    componentWillUnmount() {
+        this.props.setLoginLoadingState(LoadingState.IDLE)
     }
 
     render() {
