@@ -6,7 +6,7 @@ For interview tech skills evaluation
 
 Features backlog [here](./docs/backlog.md)
 
-[live demo](http://104.248.43.170:8000) 
+[live demo](http://167.99.244.193:8000/) 
 
 ## Dependencies
 
